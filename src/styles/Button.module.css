@@ -1,0 +1,54 @@
+/* Primary button */
+.primaryButton {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--button-border-radius);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Outline primary button */
+  .outlinePrimaryButton {
+    color: var(--primary-color);
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: var(--button-border-radius);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  /* Secondary button */
+  .secondaryButton {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: var(--button-border-radius);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Outline secondary button */
+  .outlineSecondaryButton {
+    color: var(--secondary-color);
+    background-color: transparent;
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--button-border-radius);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  /* Hover effect */
+  .primaryButton:hover,
+  .secondaryButton:hover {
+    filter: brightness(90%);
+  }
+  
+  .outlinePrimaryButton:hover,
+  .outlineSecondaryButton:hover {
+    filter: brightness(90%);
+  }
