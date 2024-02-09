@@ -1,3 +1,4 @@
+import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import Head from "next/head";
 
@@ -11,6 +12,7 @@ const HomePage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      <Footer />
     </>
   )
 }
