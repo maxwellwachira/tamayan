@@ -12,7 +12,7 @@ const PageLoader = ({color, type}: PageLoaderProps) => {
 
     return (
         <Box className={classes.wrapper}>
-            <Loader size="lg" type={type ? type : "bars"} color={color ? color : colors.primaryColor}/>
+            <Loader size="lg" type={type ? type : "bars"} color={color ? color : colors.secondaryColor}/>
         </Box>
     );
 }

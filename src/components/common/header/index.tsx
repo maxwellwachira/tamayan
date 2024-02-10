@@ -83,7 +83,7 @@ const Header = () => {
     ));
 
     return (
-        <Box pb={120}>
+        <Box>
             <header className={classes.header}>
                 <Container size="xl" h="100%">
                     <Group justify="space-between" h="100%" align='center'>
@@ -141,7 +141,7 @@ const Header = () => {
                                 </HoverCard.Dropdown>
                             </HoverCard>
                             <a href="/rental" className={classes.link} data-active={router.pathname == "/rental" ? true : undefined}>
-                                Rental Property
+                                Rental Properties
                             </a>
                             <a href="/faqs" className={classes.link} data-active={router.pathname == "/faqs" ? true : undefined}>
                                 FAQs
@@ -185,7 +185,7 @@ const Header = () => {
                     </UnstyledButton>
                     <Collapse in={linksOpened}>{links}</Collapse>
                     <a href="/rental" className={classes.link} data-active={router.pathname == "/rental" ? true : undefined}>
-                        Rental Property
+                        Rental Properties
                     </a>
                     <a href="/faqs" className={classes.link} data-active={router.pathname == "/faqs" ? true : undefined}>
                         FAQs

@@ -1,4 +1,5 @@
 import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
 import '@/styles/globals.css';
 import { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';

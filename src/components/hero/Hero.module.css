@@ -1,0 +1,75 @@
+.inner {
+  display: flex;
+  justify-content: space-between;
+  /* padding-top: calc(var(--mantine-spacing-xl) * 1); */
+  padding-bottom: calc(var(--mantine-spacing-xl) * 3);
+}
+
+.content {
+  max-width: rem(480px);
+  /* margin-right: calc(var(--mantine-spacing-xl) * 3); */
+
+  @media (max-width: $mantine-breakpoint-md) {
+    max-width: 100%;
+    margin-right: 0;
+  }
+}
+
+.title {
+  color: light-dark(var(--secondary-color), var(--mantine-color-white));
+  font-family: "Patrick Hand", cursive;
+  font-size: rem(40px);
+  /* line-height: 1.2; */
+  font-weight: 500;
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    font-size: rem(28px);
+  }
+}
+
+.control {
+  @media (max-width: $mantine-breakpoint-xs) {
+    flex: 1;
+  }
+}
+
+.image {
+  width: rem(600px);
+  height: rem(380px);
+
+  @media (max-width: $mantine-breakpoint-md) {
+    display: none;
+  }
+}
+
+.highlight {
+  position: relative;
+  background-color: var(--mantine-color-blue-light);
+  border-radius: var(--mantine-radius-sm);
+  padding: rem(4px) rem(12px);
+}
+
+.carousel {
+  @mixin hover {
+    .carouselControls {
+      opacity: 1;
+    }
+  }
+}
+
+.carouselControls {
+  transition: opacity 150ms ease;
+  color: var(--primary-color);
+  opacity: 0;
+}
+
+.carouselIndicator {
+  background-color: var(--primary-color);
+  width: rem(4px);
+  height: rem(4px);
+  transition: width 250ms ease;
+
+  &[data-active] {
+    width: rem(16px);
+  }
+}
