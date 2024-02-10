@@ -1,6 +1,7 @@
 import { FeaturesCards } from "@/components/Features";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
+import Subscribe from "@/components/common/subscribe";
 import Hero from "@/components/hero";
 import HomePageHero from "@/components/hero2";
 import HeroImageBackground from "@/components/heroImageBackground";
@@ -24,6 +25,7 @@ const HomePage = () => {
       <PropertyType />
       <FeaturesCards />
       <Hero />
+      <Subscribe />
       <Footer />
     </>
   )
