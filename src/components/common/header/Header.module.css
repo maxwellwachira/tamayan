@@ -28,7 +28,9 @@
   &[data-active] {
     color: light-dark(var(--secondary-color), var(--mantine-color-white));
     text-decoration: underline;
-  }            
+  } 
+  
+  
 }
 
 .subLink {

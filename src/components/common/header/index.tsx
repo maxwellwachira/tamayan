@@ -149,7 +149,7 @@ const Header = () => {
                         </Group>
 
                         <Group visibleFrom="sm">
-                            <Button className={buttonClasses.outlineSecondaryButton} size='md'>Contact Us</Button>
+                            <Button className={buttonClasses.outlineSecondaryButton} component='a' href="/contact" data-contact={router.pathname == "/contact" ? true : undefined} >Contact Us</Button>
                         </Group>
 
                         <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" color={colors.primaryColor}/>
@@ -193,7 +193,7 @@ const Header = () => {
                     <Divider my="sm" />
 
                     <Group pl={15}>
-                        <Button className={buttonClasses.outlineSecondaryButton}>Contact Us</Button>
+                        <Button className={buttonClasses.outlineSecondaryButton}  data-contact={router.pathname == "/contact" ? true : undefined} component='a' href="/contact">Contact Us</Button>
                     </Group>
                 </ScrollArea>
             </Drawer>
