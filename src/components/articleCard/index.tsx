@@ -59,7 +59,7 @@ export function ArticleCard({ image, title, description, footerTitle, Icon }: Ar
         </Center>
 
         <Group gap={8} mr={0}>
-          <Button variant="outline" size="xs" color="gray" radius={10}>See More</Button>
+          <Button variant="outline" size="xs" color="gray" radius={10} component='a' href="/property">See More</Button>
         </Group>
       </Group>
     </Card>
