@@ -89,11 +89,11 @@ const Header = () => {
                 <Container size="xl" h="100%">
                     <Group justify="space-between" h="100%" align='center'>
                         <Link href="/">
-                        <Image
-                            src={logo}
-                            alt="logo"
-                            width={180}
-                        />
+                            <Image
+                                src={logo}
+                                alt="logo"
+                                width={180}
+                            />
                         </Link>
 
                         <Group h="100%" gap={0} visibleFrom="sm">
@@ -155,7 +155,7 @@ const Header = () => {
                             <Button className={buttonClasses.outlineSecondaryButton} component='a' href="/contact" data-contact={router.pathname == "/contact" ? true : undefined} >Contact Us</Button>
                         </Group>
 
-                        <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" color={colors.primaryColor}/>
+                        <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" color={colors.primaryColor} />
                     </Group>
                 </Container>
             </header>
@@ -196,7 +196,7 @@ const Header = () => {
                     <Divider my="sm" />
 
                     <Group pl={15}>
-                        <Button className={buttonClasses.outlineSecondaryButton}  data-contact={router.pathname == "/contact" ? true : undefined} component='a' href="/contact">Contact Us</Button>
+                        <Button className={buttonClasses.outlineSecondaryButton} data-contact={router.pathname == "/contact" ? true : undefined} component='a' href="/contact">Contact Us</Button>
                     </Group>
                 </ScrollArea>
             </Drawer>
