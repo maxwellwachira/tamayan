@@ -22,7 +22,7 @@ const SinglePropertyLayout = () => {
                     <PropertyImages />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 12, lg: 3 }}>
-                    <Text ta="center" fz={26} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Mwananchi Apartments</Text>
+                    <Text ta="center" fz={26} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Serene Park Phase II</Text>
                     <Divider label={<Text fz={13}>General Information</Text>} my={20} />
                     <Stack px="xl">
                         <Group align="center">
@@ -85,7 +85,7 @@ const SinglePropertyLayout = () => {
             </Grid>
             <Grid>
                 <Grid.Col span={{ base: 12, md: 6 }}>
-                    <Text ta="center" fz={26} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Mwananchi Apartments</Text>
+                    <Text ta="center" fz={26} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Serene Park Phase II</Text>
                     <Stack>
                         <Text mt={10}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere quis ligula nec pellentesque. Curabitur a urna quis quam maximus malesuada. Praesent non pulvinar enim. Morbi dapibus non est at maximus. Mauris posuere, nunc vitae vehicula egestas, tellus ligula porttitor nisi, eget iaculis urna ex nec dolor. Sed faucibus, justo ut vulputate aliquam, massa arcu facilisis sem, nec egestas nunc lacus vitae turpis. Phasellus dictum volutpat sapien sed auctor. Phasellus ac dolor ultrices, mattis diam nec, volutpat diam. Sed eu lorem dolor.</Text>
                         <Text ta="center" fz={22} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Location</Text>

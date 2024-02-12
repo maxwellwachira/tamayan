@@ -33,6 +33,7 @@ import Image from 'next/image';
 import { colors } from '@/constants/colors';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const mockdata = [
     {
@@ -87,11 +88,13 @@ const Header = () => {
             <header className={classes.header}>
                 <Container size="xl" h="100%">
                     <Group justify="space-between" h="100%" align='center'>
+                        <Link href="/">
                         <Image
                             src={logo}
                             alt="logo"
                             width={180}
                         />
+                        </Link>
 
                         <Group h="100%" gap={0} visibleFrom="sm">
                             <a href="/" className={classes.link} data-active={router.pathname == "/" ? true : undefined}>
@@ -140,7 +143,7 @@ const Header = () => {
                                     </div> */}
                                 </HoverCard.Dropdown>
                             </HoverCard>
-                            <a href="/rental" className={classes.link} data-active={router.pathname == "/rental" ? true : undefined}>
+                            <a href="/property/apartments" className={classes.link} data-active={router.pathname == "/property/apartments" ? true : undefined}>
                                 Rental Properties
                             </a>
                             <a href="/faqs" className={classes.link} data-active={router.pathname == "/faqs" ? true : undefined}>

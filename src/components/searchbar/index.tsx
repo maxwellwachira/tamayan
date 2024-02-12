@@ -3,8 +3,10 @@ import { Button, Card, Group, Select, Stack, Text } from "@mantine/core";
 import { IconBuilding, IconMapPin, IconReceiptDollar, IconSearch } from "@tabler/icons-react";
 import buttonClasses from "@/styles/Button.module.css";
 import classes from "./SearchBar.module.css";
+import { useRouter } from "next/router";
 
 const SearchBar = () => {
+  const router = useRouter();
   return (
     <Stack justify="center" align="center">
       <Card withBorder px="xl" py="lg" className={classes.shadow} radius={15}>
@@ -20,7 +22,7 @@ const SearchBar = () => {
             clearable
           />
         </Stack>
-        <Stack gap={5}>
+        <Stack gap={5} display={router.pathname.includes("property") ? "none" : "flex"}>
           <Group>
             <IconBuilding color={colors.primaryColor} />
             <Text c={colors.primaryColor}>Property Type</Text>
