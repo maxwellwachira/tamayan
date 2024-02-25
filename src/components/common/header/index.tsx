@@ -146,6 +146,9 @@ const Header = () => {
                             <a href="/property/apartments" className={classes.link} data-active={router.pathname == "/property/apartments" ? true : undefined}>
                                 Rental Properties
                             </a>
+                            <a href="/property/airbnb" className={classes.link} data-active={router.pathname == "/property/airbnb" ? true : undefined}>
+                                Airbnb
+                            </a>
                             <a href="/faqs" className={classes.link} data-active={router.pathname == "/faqs" ? true : undefined}>
                                 FAQs
                             </a>
@@ -189,6 +192,9 @@ const Header = () => {
                     <Collapse in={linksOpened}>{links}</Collapse>
                     <a href="/rental" className={classes.link} data-active={router.pathname == "/rental" ? true : undefined}>
                         Rental Properties
+                    </a>
+                    <a href="/property/airbnb" className={classes.link} data-active={router.pathname == "/property/airbnb" ? true : undefined}>
+                        Airbnb
                     </a>
                     <a href="/faqs" className={classes.link} data-active={router.pathname == "/faqs" ? true : undefined}>
                         FAQs

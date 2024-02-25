@@ -1,42 +1,76 @@
-import { Container, Title, Accordion } from '@mantine/core';
+import { Container, Title, Accordion, Box, Loader, Text, Stack } from '@mantine/core';
 import classes from './FAQ.module.css';
 import { colors } from '@/constants/colors';
+import { urls } from '@/constants/urls';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { IconHelpOctagon } from '@tabler/icons-react';
 
-const placeholder =
-  'It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.It was born from sludge on the ocean floor. In a sterile environment, the germs within its body can’t multiply, and it dies.It has no eyeballs, so it can’t see. It checks its surroundings via the ultrasonic waves it emits from its mouth.';
+interface Faq {
+  data: {
+    id: number;
+    attributes: {
+      question: string;
+      answer: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+    }
+  }[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    }
+  }
+}
+const QuestionsAnswers = () => {
 
-  const QuestionsAnswers = () => {
+  const [allFaqs, setAllFaqs] = useState<Faq | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const getAllFaqs = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${urls.strapiUrl}/faqs`);
+      console.log(data);
+      setAllFaqs(data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllFaqs();
+  }, []);
+
+  if (loading) {
+    return (
+      <Stack justify='center' align='center'>
+        <Box mt={50}>
+          <Loader variant="dots" color={colors.secondaryColor} />
+        </Box>
+      </Stack>
+    )
+  }
   return (
     <Container size="sm" className={classes.wrapper}>
-      {/* <Title ta="center" className={classes.title} c={colors.primaryColor}>
-       FAQs
-      </Title> */}
-
       <Accordion variant="separated">
-        <Accordion.Item className={classes.item} value="reset-password">
-          <Accordion.Control c={colors.secondaryColor}>How can I reset my password?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
-        </Accordion.Item>
+        {allFaqs && allFaqs.data.map(faq => (
+          <Accordion.Item value={faq.attributes.question} key={faq.attributes.question}>
+            <Accordion.Control style={{ color: colors.secondaryColor, fontSize: 17 }} icon={<IconHelpOctagon size={18}/>}>{faq.attributes.question} </Accordion.Control>
+            <Accordion.Panel>
+              <Text style={{ whiteSpace: "pre-wrap" }}>
+                {faq.attributes.answer}
+              </Text>
+            </Accordion.Panel>
+          </Accordion.Item>
+        ))}
 
-        <Accordion.Item className={classes.item} value="another-account">
-          <Accordion.Control c={colors.secondaryColor}>Can I create more that one account?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item className={classes.item} value="newsletter">
-          <Accordion.Control c={colors.secondaryColor}>How can I subscribe to monthly newsletter?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item className={classes.item} value="credit-card">
-          <Accordion.Control c={colors.secondaryColor}>Do you store credit card information securely?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item className={classes.item} value="payment">
-          <Accordion.Control c={colors.secondaryColor}>What payment systems to you work with?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
-        </Accordion.Item>
       </Accordion>
     </Container>
   );
