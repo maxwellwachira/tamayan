@@ -5,6 +5,8 @@ import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import classes from "./Subscribe.module.css";
+import axios from "axios";
+import { urls } from "@/constants/urls";
 
 
 // const useStyles = createStyles(() => ({
@@ -35,23 +37,32 @@ const Subscribe = () => {
         },
     });
 
-    // const handleSubmit = async () => {
-    //     if (JSON.stringify(form.errors) === "{}") {
-    //         try {
-    //             const { data } = await axios.post(`${urls.baseUrl}/newsletter`, form.values);
-    //             if (data.message === "success") {
-    //                 setResponse(data.message);
-    //                 form.setFieldValue('email', '');
-    //                 setTimeout(() => {
-    //                     setResponse('');
-    //                 }, 6000);
-    //             }
-    //         } catch (error: any) {
-    //             console.log(error);
-    //             setResponse(error.response.data.message);
-    //         }
-    //     }
-    // }
+    const handleSubmit = async () => {
+        if (JSON.stringify(form.errors) === "{}") {
+            try {
+                const { data } = await axios.post(`${urls.strapiUrl}/subscribers`, {data: form.values});
+                console.log(data);
+                if (data.data !== null) {
+                    setResponse("Success");
+                    form.setFieldValue('email', '');
+                    setTimeout(() => {
+                        setResponse('');
+                    }, 6000);
+                }else {
+                    setResponse(data.error.message);
+                    setTimeout(() => {
+                        setResponse('');
+                    }, 15000);
+                }
+            } catch (error: any) {
+                console.log(error);
+                setResponse(error.response.data.error.message);
+                setTimeout(() => {
+                    setResponse('');
+                }, 15000);
+            }
+        }
+    }
 
     const clearResponse = () => {
         setResponse('');
@@ -64,8 +75,8 @@ const Subscribe = () => {
                     <Grid>
                         <Grid.Col span={{ base: 12, md: 6 }} mt={30}>
                             <Text fz={32} fw={600} c={colors.primaryColor}>Don't be left out, <br />Subscribe to our News Letter</Text>
-                            <form className={classes.subscribeWidth}>
-                                {response === 'success' ? (
+                            <form className={classes.subscribeWidth} onSubmit={form.onSubmit(() => handleSubmit())}>
+                                {response === 'Success' ? (
                                     <Notification icon={<IconCheck size={18} />} color="teal" title="Success" onClose={clearResponse} my="lg">
                                         You will hear from us soon!!!
                                     </Notification>
