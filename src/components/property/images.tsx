@@ -1,19 +1,25 @@
+import React from "react";
 import { Container } from "@mantine/core";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import { Image } from "@/utils/interfaces";
+import { urls } from "@/constants/urls";
 
+interface PropertyImagesProps {
+  images: Image[];
+}
 
-const createCarouselItemImage = (index: number, options = {}) => (
-    <div key={index}>
-        <img src={`/assets/${index}.jpg`} style={{borderRadius: 10}}/>
-        <p className="legend">Image {index}</p>
+const PropertyImages: React.FC<PropertyImagesProps> = ({ images }) => {
+  const createCarouselItemImage = (image: Image) => (
+    <div key={image.id}>
+      <img src={`${urls.strapiBaseUrl}${image.attributes.url}`} style={{ borderRadius: 10 }} alt={`Image ${image.id}`} />
+      {/* <p className="legend">{`Image ${image.attributes.name}`}</p> */}
     </div>
-);
+  );
 
-const baseChildren = <div>{[1, 2, 3, 4, 5].map(createCarouselItemImage)}</div>;
+  const baseChildren = <div>{images.map(createCarouselItemImage)}</div>;
 
-
-const getConfigurableProps = () => ({
+  const getConfigurableProps = () => ({
     showArrows: true,
     showStatus: true,
     showIndicators: true,
@@ -31,20 +37,16 @@ const getConfigurableProps = () => ({
     interval: 2000,
     transitionTime: 500,
     swipeScrollTolerance: 5,
-    ariaLabel: undefined
-});
+    ariaLabel: undefined,
+  });
 
-
-
-
-const PropertyImages = () => {
-    return (
-        <Container>
-        <Carousel {...getConfigurableProps()} animationHandler="fade" swipeable={false}>
-            {baseChildren.props.children}
-        </Carousel>
-        </Container>
-    )
-}
+  return (
+    <Container>
+      <Carousel {...getConfigurableProps()} animationHandler="fade" swipeable={false}>
+        {baseChildren.props.children}
+      </Carousel>
+    </Container>
+  );
+};
 
 export default PropertyImages;
