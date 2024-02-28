@@ -128,8 +128,8 @@ export interface Property {
         currency: {
             data: Currency;
         }
-        buyingReason: {
-            data: BuyingReason;
+        buyingReasons: {
+            data: BuyingReason[];
         };
         images: {
             data: Image[];
@@ -138,7 +138,7 @@ export interface Property {
             data: Amenity[];
         };
         brochure: {
-            data: Brochure;
+            data: Brochure | null;
         };
         size_unit: {
             data: SizeUnit;
