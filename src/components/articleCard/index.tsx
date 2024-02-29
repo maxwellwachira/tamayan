@@ -19,7 +19,7 @@ import { colors } from '@/constants/colors';
 import buttonClasses from "@/styles/Button.module.css";
 
 interface ArticleCardProps {
-  image: StaticImageData;
+  image: string;
   title: string;
   description: string;
   footerTitle: string;
@@ -34,7 +34,7 @@ export function ArticleCard({ image, title, description, footerTitle, Icon }: Ar
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section>
         <a {...linkProps}>
-          <Image src={image.src} height={180} />
+          <Image src={image} height={180} />
         </a>
       </Card.Section>
 
