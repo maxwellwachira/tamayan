@@ -17,7 +17,7 @@ const DownloadPdfButton: React.FC<DownloadPdfButtonProps> = ({ pdfUrl, fileName,
     };
 
     return (
-        <Button onClick={handleDownload}>
+        <Button onClick={handleDownload} radius="md">
            {title}
         </Button>
     );

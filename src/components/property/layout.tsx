@@ -1,7 +1,7 @@
 import { Button, Card, Container, Divider, Grid, Group, List, Stack, Text, ThemeIcon, rem } from "@mantine/core";
 import PropertyImages from "./images";
 import { colors } from "@/constants/colors";
-import { IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBeer, IconBrandIntercom, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming } from "@tabler/icons-react";
 import GoogleMapReact from 'google-map-react';
 import buttonClasses from "@/styles/Button.module.css";
 import axios from "axios";
@@ -9,6 +9,8 @@ import { urls } from "@/constants/urls";
 import { useEffect, useState } from "react";
 import { ApiResponse, Property } from "@/utils/interfaces";
 import DownloadPdfButton from "../DownloadPdfButton";
+import classes from "./Property.module.css"
+import { formatNumberWithCommas } from "@/utils/functions";
 
 const IconRender = ({ iconName }: { iconName: string }) => {
     // Map icon names to corresponding icon components
@@ -78,83 +80,111 @@ const SinglePropertyLayout = () => {
                     }
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 12, lg: 3 }}>
-                    <Text ta="center" fz={26} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>{property?.attributes.propertyType.data.attributes.type} Information</Text>
-                    <Divider label={<Text fz={13}>General Information</Text>} my={20} />
-                    <Stack px="xl">
-                        <Group align="center">
-                            <IconBed color="teal" size={20} />
-                            <Text fz={14}> {property?.attributes.no_of_bedrooms} Bedrooms</Text>
-                        </Group>
-                        <Group align="center">
-                            <IconBath color="teal" size={18} />
-                            <Text fz={14}> {property?.attributes.no_of_bathrooms} Bathrooms</Text>
-                        </Group>
-                        <Group align="center">
-                            <IconArrowsMaximize color="teal" size={18} />
-                            <Text fz={14}> {property?.attributes.size} {property?.attributes.size_unit.data.attributes.unit}</Text>
-                        </Group>
-                    </Stack>
-                    <Divider label={<Text fz={13}>Features</Text>} my={20} />
-                    <Stack px="xl">
-                        {property?.attributes.amenities.data.map((el, index) => (
-                            <Group align="center" wrap="nowrap" key={index}>
-                                <IconRender iconName={el.attributes.icon} />
-                                <Text fz={14}>{el.attributes.amenity}</Text>
+                    <Card className={classes.cardShadow} radius="lg">
+                        <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>{property?.attributes.propertyType.data.attributes.type} Information</Text>
+                        <Divider label={<Text fz={13}>Asking Price</Text>} my={20} />
+                        <Stack px="xl">
+                            <Group align="center">
+                                <IconCash color="teal" size={20} />
+                                <Text fz={14}>{property?.attributes.buyingPrice} Million {property?.attributes.currency.data.attributes.currency}</Text>
                             </Group>
-                        ))}
-                    </Stack>
+                        </Stack>
+                        <Divider label={<Text fz={13}>General Information</Text>} my={20} />
+                        <Stack px="xl">
+                            <Group align="center">
+                                <IconBed color="teal" size={20} />
+                                <Text fz={14}> {property?.attributes.no_of_bedrooms} Bedrooms</Text>
+                            </Group>
+                            <Group align="center">
+                                <IconBath color="teal" size={18} />
+                                <Text fz={14}> {property?.attributes.no_of_bathrooms} Bathrooms</Text>
+                            </Group>
+                            <Group align="center">
+                                <IconArrowsMaximize color="teal" size={18} />
+                                <Text fz={14}> {property?.attributes.size} {property?.attributes.size_unit.data.attributes.unit}</Text>
+                            </Group>
+
+                        </Stack>
+                        <Divider label={<Text fz={13}>Project Status</Text>} my={20} />
+                        <Stack px="xl">
+                            <Group align="center">
+                                <IconInfoSquare color="teal" size={18} />
+                                <Text fz={14}>{property?.attributes.projectStatus.data.attributes.projectStatus}</Text>
+                            </Group>
+                        </Stack>
+                        <Divider label={<Text fz={13}>Amenities</Text>} my={20} />
+                        <Stack px="xl">
+                            {property?.attributes.amenities.data.map((el, index) => (
+                                <Group align="center" wrap="nowrap" key={index}>
+                                    <IconRender iconName={el.attributes.icon} />
+                                    <Text fz={14}>{el.attributes.amenity}</Text>
+                                </Group>
+                            ))}
+                        </Stack>
+                    </Card>
                 </Grid.Col>
             </Grid>
             <Grid gutter={50}>
                 <Grid.Col span={{ base: 12, md: 6 }}>
-                    <Text ta="center" fz={26} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>What you should know about {property?.attributes.propertyName}</Text>
                     <Stack>
-                        <Text mt={10}>{property?.attributes.description}</Text>
-                        <Card shadow="lg" radius="lg">
+                        <Card className={classes.cardShadow} radius="lg">
+                            <Text ta="center" fz={26} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>What you should know about {property?.attributes.propertyName}</Text>
+                            <Text mt={10}>{property?.attributes.description}</Text>
+                        </Card>
+                        <Card className={classes.cardShadow} radius="lg">
                             <Text ta="center" fz={22} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Location</Text>
                             <List c={colors.textColor} icon={
-                                <IconMapPin style={{ width: rem(16), height: rem(16) }} color="teal" />
+                                <IconMapPin style={{ width: rem(16), height: rem(16) }} color={colors.primaryColor} />
                             }>
-                                <List.Item>{property?.attributes.location}</List.Item>
+                                <List.Item>
+                                    <Group>
+                                        <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Physical Address:</Text>
+                                        <Text>{property?.attributes.location}</Text>
+                                    </Group>
+                                </List.Item>
                             </List>
-                            <Text ta="center" fz={22} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Proximity To</Text>
                             <List c={colors.textColor} icon={
-                                <IconMapPin style={{ width: rem(16), height: rem(16) }} color="teal" />
+                                <IconMapPin style={{ width: rem(16), height: rem(16) }} color={colors.primaryColor} />
                             }>
-                                <List.Item>{property?.attributes.proximity}</List.Item>
+                                <List.Item>
+                                    <Group>
+                                        <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Proximity:</Text>
+                                        <Text>{property?.attributes.proximity}</Text>
+                                    </Group>
+                                </List.Item>
                             </List>
                         </Card>
-
-                        <Text ta="center" fz={22} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"} mt={10}>Asking Price:  {property?.attributes.buyingPrice} Million</Text>
-
                         {property && property.attributes.brochure.data &&
-                            <Stack>
+                            <Stack mt={10}>
                                 <DownloadPdfButton pdfUrl={`${urls.strapiBaseUrl}${property.attributes.brochure.data.attributes.url}`} fileName={property.attributes.brochure.data.attributes.name} title="Download Property Brochure" />
                             </Stack>
                         }
                     </Stack>
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6 }}>
-                    <Card shadow="lg" radius="lg">
-                        <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mt={10}>Reasons for Buying</Text>
+                    <Card className={classes.cardShadow} radius="lg">
+                        <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Reasons for Buying</Text>
                         {property?.attributes.buyingReasons.data.map((el, index) => (
                             <Group key={index}>
-                                <IconCheck color="teal" size={18} />
+                                <IconCheck color={colors.primaryColor} size={18} />
                                 <Text>{el.attributes.reason}</Text>
                             </Group>
                         ))}
                     </Card>
-                    <Card mt={20} shadow="lg" radius="lg">
+                    <Card mt={20} className={classes.cardShadow} radius="lg" px={20}>
+                        <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income</Text>
                         <Group align="center">
-                            <Text ta="center" fz={20} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income Unfurnished:</Text>
-                            <Text>{property?.attributes.rentalIncomeUnfurnished}</Text>
+                            <IconCash color={colors.primaryColor} size={18} />
+                            <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income Unfurnished:</Text>
+                            <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeUnfurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
                         </Group>
                         <Group align="center">
-                            <Text ta="center" fz={20} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income Furnished:</Text>
-                            <Text>{property?.attributes.rentalIncomeFurnished}</Text>
+                            <IconCash color={colors.primaryColor} size={18} />
+                            <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income Furnished:</Text>
+                            <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeFurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
                         </Group>
                     </Card>
-                    <Stack>
+                    <Stack mt={30}>
                         <Button variant="outline" color="gray" radius={15}>Enquire</Button>
                     </Stack>
                 </Grid.Col>
