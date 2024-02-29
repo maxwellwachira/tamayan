@@ -2,8 +2,6 @@ import { Button, Card, Container, Divider, Grid, Group, List, Stack, Text, Theme
 import PropertyImages from "./images";
 import { colors } from "@/constants/colors";
 import { IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoHexagon, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming } from "@tabler/icons-react";
-import GoogleMapReact from 'google-map-react';
-import buttonClasses from "@/styles/Button.module.css";
 import axios from "axios";
 import { urls } from "@/constants/urls";
 import { useEffect, useState } from "react";

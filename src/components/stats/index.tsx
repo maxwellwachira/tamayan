@@ -5,7 +5,7 @@ const Stats = () => {
     return (
         <Container>
             <Stack align="center">
-                <Group gap={50}>
+                <Group gap={50} justify="center">
                     <Group>
                         <Text className={classes.stats}>9K+</Text>
                         <Text>Premium Projects</Text>

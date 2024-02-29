@@ -1,36 +1,62 @@
 .heroBackground {
-    max-width: 1300px;
-    background: var(--primary-color);
-    border-radius: 0px 30px 0px 120px;
-    margin-bottom: 90px;
-    margin-left: auto;
-    margin-right: auto;
+  max-width: 1300px;
+  background: var(--primary-color);
+  border-radius: 0px 30px 0px 120px;
+  margin-bottom: 90px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroBackground {
+  max-width: 1300px;
+  background: var(--primary-color);
+  border-radius: 0px 30px 0px 120px;
+  margin-bottom: 90px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .title {
-    color: var(--mantine-color-white);
-    font-family: "Patrick Hand", cursive;
-    font-size: rem(44px);
-    margin-left: 50px;
-    font-weight: 500;
-  
-    @media (max-width: $mantine-breakpoint-xs) {
-      font-size: rem(28px);
-    }
+  color: var(--mantine-color-white);
+  font-family: "Patrick Hand", cursive;
+  font-size: rem(44px);
+  margin-left: 50px;
+  font-weight: 500;
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    font-size: rem(28px);
+    margin-left: 15px
+  }
 }
 
 .subtitle {
-    color: var(--mantine-color-white);
-    font-size: rem(20px);
-    margin-left: 50px;
-    font-weight: 500;
-  
-    @media (max-width: $mantine-breakpoint-xs) {
-      font-size: rem(18px);
-    }
+  color: var(--mantine-color-white);
+  font-size: rem(20px);
+  margin-left: 50px;
+  font-weight: 500;
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    font-size: rem(18px);
+    margin-left: 15px;
+  }
 }
+
 .searchPosition {
   position: absolute;
   max-width: 1300px;
   top: -80px;
+}
+
+
+@media (max-width: 48em) {
+  .heroBackground {
+    max-width: 1300px;
+    height: 550px;
+    background: var(--primary-color);
+    border-radius: 10px;
+    margin-bottom: 90px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
 }

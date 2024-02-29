@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { colors } from "@/constants/colors";
-import { Button, Card, Group, Select, Stack, Text } from "@mantine/core";
-import { IconBuilding, IconMapPin, IconReceiptDollar, IconSearch } from "@tabler/icons-react";
+import { Button, Card, Group, Select, SimpleGrid, Stack, Text } from "@mantine/core";
+import { IconBed, IconBuilding, IconMapPin, IconReceiptDollar, IconSearch } from "@tabler/icons-react";
 import buttonClasses from "@/styles/Button.module.css";
 import classes from "./SearchBar.module.css";
 import { useRouter } from "next/router";
@@ -34,9 +34,9 @@ const SearchBar = () => {
 
 
   const handleSearch = () => {
-    if(!location || !propertyType){
+    if (!location || !propertyType) {
 
-    }else {
+    } else {
       router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`);
     }
   }
@@ -45,7 +45,11 @@ const SearchBar = () => {
   return (
     <Stack justify="center" align="center">
       <Card withBorder px="xl" py="lg" className={classes.shadow} radius={15}>
-        <Group>
+        <SimpleGrid
+          cols={{ base: 1, sm: 2, lg: 4 }}
+          spacing={{ base: 10, sm: 'xl' }}
+          verticalSpacing={{ base: 'md', sm: 'xl' }}
+        >
           <Stack gap={5}>
             <Group>
               <IconMapPin color={colors.primaryColor} />
@@ -54,7 +58,7 @@ const SearchBar = () => {
             <Select
               placeholder="Select Location"
               data={counties}
-              value={location} 
+              value={location}
               onChange={setLocation}
               clearable
             />
@@ -68,7 +72,7 @@ const SearchBar = () => {
               placeholder="Select property type"
               data={propertyTypes}
               clearable
-              value={propertyType} 
+              value={propertyType}
               onChange={setPropertyType}
             />
           </Stack>
@@ -83,8 +87,21 @@ const SearchBar = () => {
               clearable
             />
           </Stack>
+          {/* {propertyType == "Apartment" && (
+            <Stack gap={5}>
+              <Group>
+                <IconBed color={colors.primaryColor} />
+                <Text c={colors.primaryColor}>No. of Bedrooms</Text>
+              </Group>
+              <Select
+                placeholder="Select price range"
+                data={["1", "2"]}
+                clearable
+              />
+            </Stack>
+          )} */}
           <Button mt={30} className={buttonClasses.secondaryButton} leftSection={<IconSearch size={16} />} onClick={handleSearch}>Search</Button>
-        </Group>
+        </SimpleGrid>
       </Card>
     </Stack>
   );
