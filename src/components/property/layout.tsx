@@ -1,7 +1,7 @@
 import { Button, Card, Container, Divider, Grid, Group, List, Stack, Text, ThemeIcon, rem } from "@mantine/core";
 import PropertyImages from "./images";
 import { colors } from "@/constants/colors";
-import { IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoHexagon, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming } from "@tabler/icons-react";
 import GoogleMapReact from 'google-map-react';
 import buttonClasses from "@/styles/Button.module.css";
 import axios from "axios";
@@ -11,6 +11,7 @@ import { ApiResponse, Property } from "@/utils/interfaces";
 import DownloadPdfButton from "../DownloadPdfButton";
 import classes from "./Property.module.css"
 import { formatNumberWithCommas } from "@/utils/functions";
+import { useRouter } from "next/router";
 
 const IconRender = ({ iconName }: { iconName: string }) => {
     // Map icon names to corresponding icon components
@@ -48,6 +49,7 @@ const IconRender = ({ iconName }: { iconName: string }) => {
 const SinglePropertyLayout = () => {
 
     const [property, setProperty] = useState<Property | null>(null);
+    const router = useRouter();
 
     const fetchProperties = async () => {
         try {
@@ -57,6 +59,10 @@ const SinglePropertyLayout = () => {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const handleEnquiryClick = () => {
+        router.push(`/contact?subject=${encodeURIComponent(`${property?.attributes.propertyType.data.attributes.type} Inquiry: ${property?.attributes.propertyName}`)}`)
     }
 
     useEffect(() => {
@@ -154,11 +160,10 @@ const SinglePropertyLayout = () => {
                                 </List.Item>
                             </List>
                         </Card>
-                        {property && property.attributes.brochure.data &&
-                            <Stack mt={10}>
-                                <DownloadPdfButton pdfUrl={`${urls.strapiBaseUrl}${property.attributes.brochure.data.attributes.url}`} fileName={property.attributes.brochure.data.attributes.name} title="Download Property Brochure" />
-                            </Stack>
-                        }
+                        <Card className={classes.cardShadow} radius="lg">
+                            <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Payment Plan</Text>
+                            <Text>{property?.attributes.paymentPlan}</Text>
+                        </Card>
                     </Stack>
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6 }}>
@@ -184,9 +189,27 @@ const SinglePropertyLayout = () => {
                             <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeFurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
                         </Group>
                     </Card>
+                    <Card mt={20} className={classes.cardShadow} radius="lg">
+                        <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Other Details</Text>
+                        <Group align="center">
+                            <IconInfoHexagon color={colors.primaryColor} size={18} />
+                            <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>SoldOut:</Text>
+                            <Text>{`${property?.attributes.soldout}`}</Text>
+                        </Group>
+                        <Group align="center">
+                            <IconInfoHexagon color={colors.primaryColor} size={18} />
+                            <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Available Units:</Text>
+                            <Text>{property?.attributes.unitsAvailable} units</Text>
+                        </Group>
+                    </Card>
                     <Stack mt={30}>
-                        <Button variant="outline" color="gray" radius={15}>Enquire</Button>
+                        <Button variant="outline" radius="md" onClick={handleEnquiryClick}>Enquire</Button>
                     </Stack>
+                    {property && property.attributes.brochure.data &&
+                        <Stack mt={20}>
+                            <DownloadPdfButton pdfUrl={`${urls.strapiBaseUrl}${property.attributes.brochure.data.attributes.url}`} fileName={property.attributes.brochure.data.attributes.name} title="Download Property Brochure" />
+                        </Stack>
+                    }
                 </Grid.Col>
             </Grid>
         </Container>
