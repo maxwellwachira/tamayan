@@ -1,22 +1,20 @@
-import { FeaturesCards } from "@/components/Features";
+import Head from "next/head";
+
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import Subscribe from "@/components/common/subscribe";
-import Hero from "@/components/hero";
+import FeaturedProperties from "@/components/hero";
 import HomePageHero from "@/components/hero2";
-import HeroImageBackground from "@/components/heroImageBackground";
 import PropertyType from "@/components/propertyType";
-import { SearchBar } from "@/components/searchbar";
 import Stats from "@/components/stats";
-import Head from "next/head";
+import { FeaturesCards } from "@/components/Features";
 
 const HomePage = () => {
-
   return (
     <>
       <Head>
         <title>Tamayan Properties | Home Page</title>
-        <meta name="description" content="Tamayan Home Page" />
+        <meta name="description" content="Tamayan Properties Home Page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
@@ -24,7 +22,7 @@ const HomePage = () => {
       <Stats />
       <PropertyType />
       <FeaturesCards />
-      <Hero />
+      <FeaturedProperties />
       <Subscribe />
       <Footer />
     </>

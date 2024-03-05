@@ -4,7 +4,7 @@ import Header from "@/components/common/header";
 import { SearchBar } from "@/components/searchbar";
 import { urls } from "@/constants/urls";
 import { Property } from "@/utils/interfaces";
-import { Box, Card, Container, Grid, Group, Loader, Stack, Text } from "@mantine/core";
+import { Badge, Box, Card, Container, Grid, Group, Loader, Stack, Text } from "@mantine/core";
 import { IconBuilding } from "@tabler/icons-react";
 import axios from "axios";
 import Head from "next/head";
@@ -43,7 +43,7 @@ const SearchProperties = () => {
                 {findings?.map((el) => (
                     <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
                         <Stack align='center'>
-                            <ArticleCard image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} />
+                            <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
                         </Stack>
                     </Grid.Col>
                 ))}
@@ -63,18 +63,26 @@ const SearchProperties = () => {
             </Head>
             <Header />
             <Container size="lg">
-                <Box mt={30}>
+                <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mt={20}>Search Properties</Text>
+                <Box mt={15}>
                     <SearchBar />
                 </Box>
-                {loading ? <Stack mt={60} align="center" justify="center" color={colors.secondaryColor}>
-                    <Loader />
+                {loading ? <Stack mt={60} align="center" justify="center">
+                    <Loader color={colors.primaryColor} type="dots" />
                 </Stack>
                     :
                     <>
                         {(findings && findings.length > 0) ?
-                            <Grid mt={30}>
-                                {displayResults()}
-                            </Grid>
+                            <>
+                                <Stack mt={30} justify="center" align="center">
+                                    <Badge variant="gradient" gradient={{ from: 'blue', to: 'teal' }} size="lg">
+                                        {findings.length} {findings.length > 1 ? "results" : "result"} found
+                                    </Badge>
+                                </Stack>
+                                <Grid mt={20}>
+                                    {displayResults()}
+                                </Grid>
+                            </>
                             :
                             <Stack justify="center" align="center" mt={20}>
                                 <Card shadow="lg" radius="md" withBorder>

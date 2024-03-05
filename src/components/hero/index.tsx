@@ -1,94 +1,47 @@
-import { useRef } from 'react';
-import { Container, Title, Button, Group, Text, List, ThemeIcon, rem, Stack, Grid } from '@mantine/core';
-import { IconBuildingSkyscraper, IconBuildingWarehouse, IconCheck, IconDesk, IconMoneybag, IconReceiptDollar } from '@tabler/icons-react';
-import Autoplay from 'embla-carousel-autoplay';
-import { Carousel } from '@mantine/carousel';
-import Image from 'next/image';
-import classes from './Hero.module.css';
-import { colors } from '@/constants/colors';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import { Container, Stack, Grid, Text } from '@mantine/core';
+import { IconBuilding } from '@tabler/icons-react';
 import { ArticleCard } from '@/components/articleCard';
-import apartments from '@/assets/interior1.jpg';
-import offices from '@/assets/office.jpg';
-import warehouse from '@/assets/warehouse2.jpg';
-import townhouse from '@/assets/interior2.jpg';
+import { Property } from '@/utils/interfaces';
+import { urls } from '@/constants/urls';
+import classes from './Hero.module.css';
 
-const slidesData = [
-    {
-        icon: IconReceiptDollar,
-        title: 'XYZ Apartments',
-        description: 'Luxurious, Spacious and Affordable',
-        footerTitle: '5 Million KES',
-        image: apartments
-    },
-    {
-        icon: IconReceiptDollar,
-        title: 'Pamoja Offices',
-        description: 'Luxurious, Spacious and Affordable',
-        footerTitle: '200K KES',
-        image: offices
-    },
-    {
-        icon: IconReceiptDollar,
-        title: 'Mwananchi Warehouse',
-        description: 'Luxurious, Spacious and Affordable ',
-        footerTitle: '400K KES',
-        image: warehouse
-    },
-    {
-        icon: IconReceiptDollar,
-        title: 'Bamburi TownHouse',
-        description: 'Luxurious, Spacious and Affordable',
-        footerTitle: '22 Million KES',
-        image: townhouse
-    },
-    {
-        icon: IconReceiptDollar,
-        title: 'Mwananchi Warehouse',
-        description: 'Luxurious, Spacious and Affordable ',
-        footerTitle: '400K KES',
-        image: warehouse
-    },
-    {
-        icon: IconReceiptDollar,
-        title: 'XYZ Apartments',
-        description: 'Luxurious, Spacious and Affordable',
-        footerTitle: '5 Million KES',
-        image: apartments
-    },
-    {
-        icon: IconReceiptDollar,
-        title: 'Bamburi TownHouse',
-        description: 'Luxurious, Spacious and Affordable',
-        footerTitle: '22 Million KES',
-        image: townhouse
-    },
-    {
-        icon: IconReceiptDollar,
-        title: 'Pamoja Offices',
-        description: 'Luxurious, Spacious and Affordable',
-        footerTitle: '200K KES',
-        image: offices
-    },
-]
+const FeaturedProperties = () => {
+    const [properties, setProperties] = useState<Property[] | null>(null);
 
-const Hero = () => {
-    const autoplay = useRef(Autoplay({ delay: 5000 }));
+    const fetchProperties = async () => {
+        try {
+            const { data } = await axios.get(`${urls.strapiUrl}/properties?populate=*&filters[featured][$eq]=${true}`);
+            // console.log(data.data)
+            setProperties(data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-    const properties = slidesData.map((el) => (
-        <Grid.Col key={el.title} span={{ base:12, md:6, lg: 3}}>
+    const featuredProperties = properties?.map((el) => (
+        <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
             <Stack align='center'>
-                <ArticleCard image={el.image} title={el.title} description={el.description} footerTitle={el.footerTitle} Icon={el.icon} />
+                <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
             </Stack>
         </Grid.Col>
     ))
+
+    useEffect(() => {
+        fetchProperties();
+    }, []);
+
+    
     return (
         <Container size="lg" mt={50}>
             <Text ta="center" mb={30} className={classes.title}>Featured Properties</Text>
             <Grid>
-                {properties}
+                {featuredProperties}
             </Grid>
         </Container>
     );
 }
 
-export default Hero;
+export default FeaturedProperties;
