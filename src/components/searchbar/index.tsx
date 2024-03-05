@@ -5,6 +5,7 @@ import { IconBed, IconBuilding, IconMapPin, IconReceiptDollar, IconSearch } from
 import buttonClasses from "@/styles/Button.module.css";
 import classes from "./SearchBar.module.css";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@mantine/hooks";
 
 const SearchBar = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const SearchBar = () => {
   const [location, setLocation] = useState<string | null>(urlLocation);
   const [propertyType, setPropertyType] = useState<string | null>(urlPropertyType);
   const [priceRange, setPriceRange] = useState<string | null>('');
+  const smBreakPoint = useMediaQuery('(max-width: 48em)');
 
   const counties = [
     { value: "Nairobi", label: "Nairobi County" },
@@ -37,7 +39,7 @@ const SearchBar = () => {
     if (!location || !propertyType) {
 
     } else {
-      router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`);
+      router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`, undefined, {shallow: true});
     }
   }
 
@@ -100,7 +102,7 @@ const SearchBar = () => {
               />
             </Stack>
           )} */}
-          <Button mt={30} className={buttonClasses.secondaryButton} leftSection={<IconSearch size={16} />} onClick={handleSearch}>Search</Button>
+          <Button mt={smBreakPoint ? 5 : 30} className={buttonClasses.secondaryButton} leftSection={<IconSearch size={16} />} onClick={handleSearch}>Search</Button>
         </SimpleGrid>
       </Card>
     </Stack>

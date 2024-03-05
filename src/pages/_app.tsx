@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app';
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
 
 import PageLoader from '@/components/common/pageLoader/pageLoader';
+import { RefreshPageProvider } from '@/contexts/refreshContext';
 
 
 const theme = createTheme({
@@ -23,12 +24,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <ColorSchemeScript defaultColorScheme="light" />
       <MantineProvider theme={theme} defaultColorScheme="light">
-        {!loading ?
-          (<PageLoader />) :
-          <>
-            <Component {...pageProps} />
-          </>
-        }
+        <RefreshPageProvider>
+          {!loading ?
+            (<PageLoader />) :
+            <>
+              <Component {...pageProps} />
+            </>
+          }
+        </RefreshPageProvider>
       </MantineProvider>
     </>
   );
