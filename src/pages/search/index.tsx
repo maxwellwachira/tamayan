@@ -25,8 +25,11 @@ const SearchProperties = () => {
 
     const searchProperty = async () => {
         setLoading(true);
+        let filters = "";
+        if(location && Number(location) != 0) filters = filters + `*&filters[county][county][$eq]=${location}`;
+        if(propertyType && Number(propertyType) != 0) filters = filters + `filters[propertyType][type][$eq]=${propertyType}`;
         try {
-            const { data } = await axios.get(`${urls.strapiUrl}/properties?populate=*&filters[county][county][$eq]=${location}&filters[propertyType][type][$eq]=${propertyType}`);
+            const { data } = await axios.get(`${urls.strapiUrl}/properties?populate=*${filters}`);
             console.log(data);
             setFindings(data.data);
         } catch (error) {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { colors } from "@/constants/colors";
 import { Button, Card, Group, Select, SimpleGrid, Stack, Text } from "@mantine/core";
-import { IconBed, IconBuilding, IconMapPin, IconReceiptDollar, IconSearch } from "@tabler/icons-react";
+import { IconBed, IconBuilding, IconMapPin, IconReceiptDollar, IconReportAnalytics, IconSearch } from "@tabler/icons-react";
 import buttonClasses from "@/styles/Button.module.css";
 import classes from "./SearchBar.module.css";
 import { useRouter } from "next/router";
@@ -136,10 +136,10 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {router.pathname == "/property/apartments" && (
+          {!(router.pathname == "/" || router.pathname == "/search") && (
             <Stack gap={5}>
               <Group>
-                <IconBed color={colors.primaryColor} />
+                <IconReportAnalytics color={colors.primaryColor} />
                 <Text c={colors.primaryColor}>Reason for buying</Text>
               </Group>
               <Select
@@ -151,7 +151,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {router.pathname != "/property/apartments" && (
+          {(router.pathname == "/" || router.pathname == "/search") && (
             <Stack gap={5}>
               <Group>
                 <IconReceiptDollar color={colors.primaryColor} />

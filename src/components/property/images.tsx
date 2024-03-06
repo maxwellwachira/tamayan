@@ -12,7 +12,7 @@ interface PropertyImagesProps {
 const PropertyImages: React.FC<PropertyImagesProps> = ({ images }) => {
   const createCarouselItemImage = (image: Image) => (
     <div key={image.id}>
-      <img src={`${urls.strapiBaseUrl}${image.attributes.url}`} style={{ borderRadius: 10 }} alt={`Image ${image.id}`} />
+      <img src={`${urls.strapiBaseUrl}${image.attributes.url}`} style={{ borderRadius: 10 }} alt={`Image ${image.id}`}/>
       {/* <p className="legend">{`Image ${image.attributes.name}`}</p> */}
     </div>
   );

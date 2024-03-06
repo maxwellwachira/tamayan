@@ -40,21 +40,25 @@ const mockdata = [
         icon: IconBuildingSkyscraper,
         title: 'Apartments on Sale',
         description: 'Find your dream apartment, from cozy studios to luxurious penthouses.',
+        url: '/property/apartments'
     },
     {
         icon: IconDesk,
         title: 'Offices on Sale',
         description: 'Discover productive workspaces tailored to your business needs',
+        url: '/property/offices'
     },
     {
         icon: IconBuildingWarehouse,
         title: 'Warehouses on Sale',
         description: 'Streamline operations with our range of efficient warehouse spaces.',
+        url: '/property/warehouses'
     },
     {
         icon: IconHomeStar,
         title: 'Town houses on Sale',
         description: 'Experience charm and comfort in our townhouses',
+        url: '/property/townhouses'
     },
 ];
 
@@ -66,7 +70,7 @@ const Header = () => {
     const router = useRouter();
 
     const links = mockdata.map((item) => (
-        <UnstyledButton className={classes.subLink} key={item.title}>
+        <UnstyledButton className={classes.subLink} key={item.title} component='a' href={item.url}>
             <Group wrap="nowrap" align="flex-start">
                 <ThemeIcon size={34} variant="default" radius="md">
                     <item.icon style={{ width: rem(22), height: rem(22) }} color={colors.secondaryColor} />
@@ -143,7 +147,7 @@ const Header = () => {
                                     </div> */}
                                 </HoverCard.Dropdown>
                             </HoverCard>
-                            <a href="/property/apartments" className={classes.link} data-active={router.pathname == "/property/apartments" ? true : undefined}>
+                            <a href="/property/rentals" className={classes.link} data-active={router.pathname == "/property/rentals" ? true : undefined}>
                                 Rental Properties
                             </a>
                             <a href="/property/airbnb" className={classes.link} data-active={router.pathname == "/property/airbnb" ? true : undefined}>
@@ -190,7 +194,7 @@ const Header = () => {
                         </Center>
                     </UnstyledButton>
                     <Collapse in={linksOpened}>{links}</Collapse>
-                    <a href="/rental" className={classes.link} data-active={router.pathname == "/rental" ? true : undefined}>
+                    <a href="/property/rentals" className={classes.link} data-active={router.pathname == "/property/rentals" ? true : undefined}>
                         Rental Properties
                     </a>
                     <a href="/property/airbnb" className={classes.link} data-active={router.pathname == "/property/airbnb" ? true : undefined}>
