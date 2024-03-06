@@ -9,15 +9,22 @@ import { useMediaQuery } from "@mantine/hooks";
 
 const SearchBar = () => {
   const router = useRouter();
+
   const urlLocation = router.query.location as string;
   const urlPropertyType = router.query.propertyType as string;
+  const urlBeds = router.query.beds as string;
+  const urlReason = router.query.reason as string;
+
   const [location, setLocation] = useState<string | null>(urlLocation);
   const [propertyType, setPropertyType] = useState<string | null>(urlPropertyType);
+  const [beds, setBeds] = useState<string | null>(urlBeds);
+  const [reason, setReason] = useState<string | null>(urlReason);
   const [priceRange, setPriceRange] = useState<string | null>('');
+
   const smBreakPoint = useMediaQuery('(max-width: 48em)');
 
   const counties = [
-    {value: "0", label: "Any"},
+    { value: "0", label: "Any" },
     { value: "Nairobi", label: "Nairobi County" },
     { value: "Kajiado", label: "Kajiado County" },
     { value: "Machakos", label: "Machakos County" },
@@ -27,7 +34,7 @@ const SearchBar = () => {
   ];
 
   const propertyTypes = [
-    {value: "0", label: "Any"},
+    { value: "0", label: "Any" },
     { value: "Apartment", label: "Apartments on Sale" },
     { value: "Office", label: "Offices on Sale" },
     { value: "Warehouse", label: "Warehouses on Sale" },
@@ -36,34 +43,42 @@ const SearchBar = () => {
   ];
 
   const bedrooms = [
-    {value: "0", label: "Any"},
-    {value: "1", label: "1 Bedroom"},
-    {value: "2", label: "2 Bedrooms"},
-    {value: "3", label: "3 Bedrooms"},
-    {value: "4", label: "4 Bedrooms"},
-    {value: "5", label: "5 Bedrooms"},
-    {value: "6", label: "6 Bedrooms"},
-    {value: "7", label: "7 Bedrooms"},
-    {value: "8", label: "8 Bedrooms"},
-    {value: "9", label: "9 Bedrooms"},
-    {value: "10", label: "10 Bedrooms"},
-    {value: "11", label: "11 Bedrooms"},
+    { value: "0", label: "Any" },
+    { value: "1", label: "1 Bedroom" },
+    { value: "2", label: "2 Bedrooms" },
+    { value: "3", label: "3 Bedrooms" },
+    { value: "4", label: "4 Bedrooms" },
+    { value: "5", label: "5 Bedrooms" },
+    { value: "6", label: "6 Bedrooms" },
+    { value: "7", label: "7 Bedrooms" },
+    { value: "8", label: "8 Bedrooms" },
+    { value: "9", label: "9 Bedrooms" },
+    { value: "10", label: "10 Bedrooms" },
+    { value: "11", label: "11 Bedrooms" },
   ];
 
 
   const buyingReason = [
-    {value: "0", label: "Any"},
-    {value: "To Occupy", label: "To Occupy"},
-    {value: "Investment - Rental Income", label: "Investment - Rental Income"},
-    {value: "Investment - Value appreciation", label: "Investment - Value appreciation"},
+    { value: "0", label: "Any" },
+    { value: "To Occupy", label: "To Occupy" },
+    { value: "Investment - Rental Income", label: "Investment - Rental Income" },
+    { value: "Investment - Value appreciation", label: "Investment - Value appreciation" },
   ]
 
 
   const handleSearch = () => {
-    if (!location || !propertyType) {
-
-    } else {
-      router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`, undefined, { shallow: true });
+    if (router.pathname === "/") {
+      if (!location || !propertyType) {
+      } else {
+        router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`, undefined, { shallow: true });
+      }
+    } else if (router.pathname === "/property/apartments") {
+      let query = "?propertyType=Apartment";
+      if (location) query = query + `&location=${location}`;
+      if (beds) query = query + `&beds=${beds}`;
+      if (reason) query = query + `&reason=${reason}`;
+      console.log(query);
+      router.push(`/property/apartments/${query}`);
     }
   }
 
@@ -116,6 +131,8 @@ const SearchBar = () => {
                 placeholder="Select No. of Bedrooms"
                 data={bedrooms}
                 clearable
+                value={beds}
+                onChange={setBeds}
               />
             </Stack>
           )}
@@ -129,6 +146,8 @@ const SearchBar = () => {
                 placeholder="Select Reason for Buying"
                 data={buyingReason}
                 clearable
+                value={reason}
+                onChange={setReason}
               />
             </Stack>
           )}
