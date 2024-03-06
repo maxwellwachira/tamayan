@@ -1,5 +1,6 @@
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
+import WarehouseOnly from "@/components/property/warehouse";
 import Head from "next/head";
 
 
@@ -12,7 +13,7 @@ const WareHousesPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-          
+            <WarehouseOnly />
             <Footer />
         </>
     )

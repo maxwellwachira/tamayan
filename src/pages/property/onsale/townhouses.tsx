@@ -1,9 +1,10 @@
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
+import TownHousesOnly from "@/components/property/townhouses";
 import Head from "next/head";
 
 
-const TownhousesPage = () => {
+const TownHousesPage = () => {
     return (
         <>
             <Head>
@@ -12,10 +13,10 @@ const TownhousesPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-          
+            <TownHousesOnly />
             <Footer />
         </>
     )
 }
 
-export default TownhousesPage;
+export default TownHousesPage;

@@ -40,25 +40,25 @@ const mockdata = [
         icon: IconBuildingSkyscraper,
         title: 'Apartments on Sale',
         description: 'Find your dream apartment, from cozy studios to luxurious penthouses.',
-        url: '/property/apartments'
+        url: '/property/onsale/apartments'
     },
     {
         icon: IconDesk,
         title: 'Offices on Sale',
         description: 'Discover productive workspaces tailored to your business needs',
-        url: '/property/offices'
+        url: '/property/onsale/offices'
     },
     {
         icon: IconBuildingWarehouse,
         title: 'Warehouses on Sale',
         description: 'Streamline operations with our range of efficient warehouse spaces.',
-        url: '/property/warehouses'
+        url: '/property/onsale/warehouses'
     },
     {
         icon: IconHomeStar,
         title: 'Town houses on Sale',
         description: 'Experience charm and comfort in our townhouses',
-        url: '/property/townhouses'
+        url: '/property/onsale/townhouses'
     },
 ];
 

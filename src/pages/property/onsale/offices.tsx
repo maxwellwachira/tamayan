@@ -1,5 +1,6 @@
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
+import OfficesOnly from "@/components/property/offices";
 import Head from "next/head";
 
 
@@ -12,7 +13,7 @@ const OfficesPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-          
+            <OfficesOnly />
             <Footer />
         </>
     )

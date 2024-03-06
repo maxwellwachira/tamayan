@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { colors } from "@/constants/colors";
 import { Button, Card, Group, Select, SimpleGrid, Stack, Text } from "@mantine/core";
-import { IconBed, IconBuilding, IconMapPin, IconReceiptDollar, IconReportAnalytics, IconSearch } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconBed, IconBuilding, IconMapPin, IconReceiptDollar, IconReportAnalytics, IconSearch } from "@tabler/icons-react";
 import buttonClasses from "@/styles/Button.module.css";
 import classes from "./SearchBar.module.css";
 import { useRouter } from "next/router";
@@ -14,11 +14,13 @@ const SearchBar = () => {
   const urlPropertyType = router.query.propertyType as string;
   const urlBeds = router.query.beds as string;
   const urlReason = router.query.reason as string;
+  const urlSize = router.query.size as string;
 
   const [location, setLocation] = useState<string | null>(urlLocation);
   const [propertyType, setPropertyType] = useState<string | null>(urlPropertyType);
   const [beds, setBeds] = useState<string | null>(urlBeds);
   const [reason, setReason] = useState<string | null>(urlReason);
+  const [size, setSize] = useState<string | null>(urlSize);
   const [priceRange, setPriceRange] = useState<string | null>('');
 
   const smBreakPoint = useMediaQuery('(max-width: 48em)');
@@ -57,6 +59,20 @@ const SearchBar = () => {
     { value: "11", label: "11 Bedrooms" },
   ];
 
+  const spaceRange = [
+    { value: "0", label: "Any" },
+    { value: "1", label: "1 - 1000 sqft" },
+    { value: "2", label: "1001 - 2000 sqft" },
+    { value: "3", label: "2001 - 3000 sqft" },
+    { value: "4", label: "3001 - 4000 sqft" },
+    { value: "5", label: "4001 - 5000 sqft" },
+    { value: "6", label: "5001 - 6000 sqft" },
+    { value: "7", label: "6001 - 7000 sqft" },
+    { value: "8", label: "7001 - 8000 sqft" },
+    { value: "9", label: "8001 - 9000 sqft" },
+    { value: "10", label: "9001 - 10000 sqft" },
+  ]
+
 
   const buyingReason = [
     { value: "0", label: "Any" },
@@ -72,13 +88,34 @@ const SearchBar = () => {
       } else {
         router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`, undefined, { shallow: true });
       }
-    } else if (router.pathname === "/property/apartments") {
+    } else if (router.pathname === "/property/onsale/apartments") {
       let query = "?propertyType=Apartment";
       if (location) query = query + `&location=${location}`;
       if (beds) query = query + `&beds=${beds}`;
       if (reason) query = query + `&reason=${reason}`;
       console.log(query);
-      router.push(`/property/apartments/${query}`);
+      router.push(`/property/onsale/apartments/${query}`);
+    } else if (router.pathname === "/property/onsale/townhouses") {
+      let query = `?propertyType=${encodeURIComponent("Town House")}`;
+      if (location) query = query + `&location=${location}`;
+      if (beds) query = query + `&beds=${beds}`;
+      if (reason) query = query + `&reason=${reason}`;
+      console.log(query);
+      router.push(`/property/onsale/townhouses/${query}`);
+    } else if (router.pathname === "/property/onsale/warehouses") {
+      let query = `?propertyType=${encodeURIComponent("Warehouse")}`;
+      if (location) query = query + `&location=${location}`;
+      if (size) query = query + `&size=${size}`;
+      if (reason) query = query + `&reason=${reason}`;
+      console.log(query);
+      router.push(`/property/onsale/warehouses/${query}`);
+    } else if (router.pathname === "/property/onsale/offices") {
+      let query = `?propertyType=${encodeURIComponent("Office")}`;
+      if (location) query = query + `&location=${location}`;
+      if (size) query = query + `&size=${size}`;
+      if (reason) query = query + `&reason=${reason}`;
+      console.log(query);
+      router.push(`/property/onsale/offices/${query}`);
     }
   }
 
@@ -121,7 +158,22 @@ const SearchBar = () => {
               onChange={setPropertyType}
             />
           </Stack>
-          {router.pathname == "/property/apartments" && (
+          {(router.pathname == "/property/onsale/offices" || router.pathname == "/property/onsale/warehouses") && (
+            <Stack gap={5}>
+              <Group>
+                <IconArrowsMaximize color={colors.primaryColor} />
+                <Text c={colors.primaryColor}>Space</Text>
+              </Group>
+              <Select
+                placeholder="Select floor Size"
+                data={spaceRange}
+                clearable
+                value={size}
+                onChange={setSize}
+              />
+            </Stack>
+          )}
+          {(router.pathname == "/property/onsale/apartments" || router.pathname == "/property/onsale/townhouses") && (
             <Stack gap={5}>
               <Group>
                 <IconBed color={colors.primaryColor} />
