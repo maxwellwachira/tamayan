@@ -101,7 +101,7 @@ const Header = () => {
                             />
                         </Link>
 
-                        <Group h="100%" gap={0} visibleFrom="sm">
+                        <Group h="100%" gap={0} visibleFrom="md">
                             <a href="/" className={classes.link} data-active={router.pathname == "/" ? true : undefined}>
                                 Home
                             </a>
@@ -159,11 +159,11 @@ const Header = () => {
                             </a>
                         </Group>
 
-                        <Group visibleFrom="sm">
+                        <Group visibleFrom="md">
                             <Button className={buttonClasses.outlineSecondaryButton} component='a' href="/contact" data-contact={router.pathname == "/contact" ? true : undefined} >Contact Us</Button>
                         </Group>
 
-                        <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" color={colors.primaryColor} />
+                        <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="md" color={colors.primaryColor} />
                     </Group>
                 </Container>
             </header>
@@ -174,7 +174,7 @@ const Header = () => {
                 style={{ header: { color: colors.secondaryColor } }}
                 padding="md"
                 title="Menu"
-                hiddenFrom="sm"
+                hiddenFrom="md"
                 zIndex={1000000}
             >
                 <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">

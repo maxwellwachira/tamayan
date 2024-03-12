@@ -22,6 +22,8 @@ const SearchBar = () => {
   const [reason, setReason] = useState<string | null>(urlReason);
   const [size, setSize] = useState<string | null>(urlSize);
   const [priceRange, setPriceRange] = useState<string | null>('');
+  const [rent, setRent] = useState<string | null>('');
+  const [dailyCharges, setDailyCharges] = useState<string | null>('');
 
   const smBreakPoint = useMediaQuery('(max-width: 48em)');
 
@@ -116,6 +118,20 @@ const SearchBar = () => {
       if (reason) query = query + `&reason=${reason}`;
       console.log(query);
       router.push(`/property/onsale/offices/${query}`);
+    }else if (router.pathname === "/property/rentals"){
+      let query = `?propertyType=${encodeURIComponent("Rentals")}`;
+      if (location) query = query + `&location=${location}`;
+      if (rent) query = query + `&rent=${rent}`;
+      if (beds) query = query + `&beds=${beds}`;
+      console.log(query);
+      router.push(`/property/rentals/${query}`);
+    }else if (router.pathname === "/property/airbnb"){
+      let query = `?propertyType=${encodeURIComponent("Airbnb")}`;
+      if (location) query = query + `&location=${location}`;
+      if (dailyCharges) query = query + `&dailyCharges=${dailyCharges}`;
+      if (beds) query = query + `&beds=${beds}`;
+      console.log(query);
+      router.push(`/property/airbnb/${query}`);
     }
   }
 
@@ -173,7 +189,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {(router.pathname == "/property/onsale/apartments" || router.pathname == "/property/onsale/townhouses") && (
+          {(router.pathname == "/property/onsale/apartments" || router.pathname == "/property/onsale/townhouses" || router.pathname == "/property/rentals" || router.pathname == "/property/airbnb") && (
             <Stack gap={5}>
               <Group>
                 <IconBed color={colors.primaryColor} />
@@ -188,7 +204,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {!(router.pathname == "/" || router.pathname == "/search") && (
+          {!(router.pathname == "/" || router.pathname == "/search"  || router.pathname == "/property/rentals" || router.pathname == "/property/airbnb") && (
             <Stack gap={5}>
               <Group>
                 <IconReportAnalytics color={colors.primaryColor} />
@@ -213,6 +229,36 @@ const SearchBar = () => {
                 placeholder="Select price range"
                 data={['2 - 3 Million KES', '3 - 5 Million KES', '5 - 8 Million KES', '8 - 15 Million KES', '15 Million +']}
                 clearable
+              />
+            </Stack>
+          )}
+          {(router.pathname == "/property/rentals" )&& (
+            <Stack gap={5}>
+              <Group>
+                <IconReceiptDollar color={colors.primaryColor} />
+                <Text c={colors.primaryColor}>Monthly Rent</Text>
+              </Group>
+              <Select
+                placeholder="Select price range"
+                data={['50,000 - 70,000 KES', '71,000 - 90,000 KES', '91,000 - 110,000 KES', '111,000 - 150,000 KES', '150,000 +']}
+                clearable
+                value={rent}
+                onChange={setRent}
+              />
+            </Stack>
+          )}
+           {(router.pathname == "/property/airbnb" )&& (
+            <Stack gap={5}>
+              <Group>
+                <IconReceiptDollar color={colors.primaryColor} />
+                <Text c={colors.primaryColor}>Daily Charges</Text>
+              </Group>
+              <Select
+                placeholder="Select price range"
+                data={['5000 - 10,000 KES', '11,000 - 15,000 KES', '16,000 - 20,000 KES' , '20,000 +']}
+                clearable
+                value={rent}
+                onChange={setRent}
               />
             </Stack>
           )}
