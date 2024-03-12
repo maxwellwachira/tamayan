@@ -83,7 +83,7 @@ const SearchBar = () => {
 
 
   const handleSearch = () => {
-    if (router.pathname === "/") {
+    if (router.pathname === "/") {``
       if (!location || !propertyType) {
       } else {
         router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`, undefined, { shallow: true });

@@ -49,7 +49,7 @@ import { colors } from '@/constants/colors';
           stroke={2}
           color={colors.primaryColor}
         />
-        <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">
+        <Text fz="lg" fw={500} className={classes.cardTitle} mt="md" c={colors.secondaryColor}>
           {feature.title}
         </Text>
         <Text fz="sm" c="dimmed" mt="sm">
@@ -60,7 +60,7 @@ import { colors } from '@/constants/colors';
   
     return (
       <Container size="lg" py="xl" mt={30}>
-        <Title order={2} className={classes.title} ta="center" mt="sm">
+        <Title order={2} className={classes.title} ta="center" mt="sm" >
           Buy your Dream Property effortlessly
         </Title>
   
