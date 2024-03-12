@@ -1,7 +1,7 @@
 import { Button, Card, Container, Divider, Grid, Group, List, Stack, Text, ThemeIcon, rem } from "@mantine/core";
 import PropertyImages from "./images";
 import { colors } from "@/constants/colors";
-import { IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoHexagon, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoHexagon, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming, IconToolsKitchen2 } from "@tabler/icons-react";
 import axios from "axios";
 import { urls } from "@/constants/urls";
 import { useEffect, useState } from "react";
@@ -67,13 +67,6 @@ const SinglePropertyLayout = () => {
         fetchProperties();
     }, []);
 
-    const defaultProps = {
-        center: {
-            lat: -1.5326637193356476,
-            lng: 37.1471550701857
-        },
-        zoom: 11
-    };
     return (
         <Container size="xl" mt={10}>
             <Text ta="center" fz={26} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} my={10}>{property?.attributes.propertyName} {property?.attributes.propertyType.data.attributes.type.toLowerCase() === "apartment" ? ` - ${property.attributes.no_of_bedrooms} Bedroom Apartment` : ""}</Text>
@@ -95,14 +88,27 @@ const SinglePropertyLayout = () => {
                         </Stack>
                         <Divider label={<Text fz={13}>General Information</Text>} my={20} />
                         <Stack px="xl">
-                            <Group align="center">
-                                <IconBed color="teal" size={20} />
-                                <Text fz={14}> {property?.attributes.no_of_bedrooms} Bedrooms</Text>
-                            </Group>
-                            <Group align="center">
-                                <IconBath color="teal" size={18} />
-                                <Text fz={14}> {property?.attributes.no_of_bathrooms} Bathrooms</Text>
-                            </Group>
+                            {
+                                (property?.attributes.propertyType.data.attributes.type == "Apartment" || property?.attributes.propertyType.data.attributes.type == "Town House") &&
+                                <>
+                                    <Group align="center">
+                                        <IconBed color="teal" size={20} />
+                                        <Text fz={14}> {property?.attributes.no_of_bedrooms} Bedrooms</Text>
+                                    </Group>
+                                    <Group align="center">
+                                        <IconBath color="teal" size={18} />
+                                        <Text fz={14}> {property?.attributes.no_of_bathrooms} Bathrooms</Text>
+                                    </Group>
+                                    <Group align="center">
+                                        <IconToolsKitchen2 color="teal" size={18} />
+                                        <Text fz={14}> {property?.attributes.kitchenPlan.data.attributes.plan}</Text>
+                                    </Group>
+                                    <Group align="center">
+                                        <IconBed color="teal" size={20} />
+                                        <Text fz={14}> {property?.attributes.no_of_DSQ} DSQ</Text>
+                                    </Group>
+                                </>
+                            }
                             <Group align="center">
                                 <IconArrowsMaximize color="teal" size={18} />
                                 <Text fz={14}> {property?.attributes.size} {property?.attributes.size_unit.data.attributes.unit}</Text>

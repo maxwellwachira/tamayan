@@ -34,6 +34,7 @@ import { colors } from '@/constants/colors';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import whatsapp from '@/assets/whatsapp.png';
 
 const mockdata = [
     {
@@ -210,6 +211,14 @@ const Header = () => {
                     </Group>
                 </ScrollArea>
             </Drawer>
+            <Anchor className={classes.whatsapp} href='https://wa.me/254736961796?text=Hello%2C%20I%20am%20interested%20in%20Tamayan%20Properties' target='_blank'>
+                <Image
+                    src={whatsapp}
+                    height={50}
+                    width={50}
+                    alt="whatsapp icon"
+                />
+            </Anchor>
         </Box>
     );
 }

@@ -28,9 +28,9 @@
   &[data-active] {
     color: light-dark(var(--secondary-color), var(--mantine-color-white));
     text-decoration: underline;
-  } 
-  
-  
+  }
+
+
 }
 
 .subLink {
@@ -50,4 +50,16 @@
   padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
   padding-bottom: var(--mantine-spacing-xl);
   border-top: rem(1px) solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+}
+
+.whatsapp {
+  position: fixed;
+  top: calc(100vh - 105px);
+  right: 0;
+  margin-right: 30px;
+  z-index: 10;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    margin-right: 10px;
+  }
 }

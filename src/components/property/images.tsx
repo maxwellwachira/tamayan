@@ -34,7 +34,7 @@ const PropertyImages: React.FC<PropertyImagesProps> = ({ images }) => {
     autoFocus: true,
     thumbWidth: 100,
     selectedItem: 0,
-    interval: 2000,
+    interval: 5000,
     transitionTime: 500,
     swipeScrollTolerance: 5,
     ariaLabel: undefined,

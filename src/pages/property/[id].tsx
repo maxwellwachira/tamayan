@@ -1,6 +1,6 @@
 import { urls } from "@/constants/urls";
 import { Property } from "@/utils/interfaces";
-import { IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoHexagon, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming } from "@tabler/icons-react";
+import { IconAlarm, IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBedFlat, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoHexagon, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming, IconToolsKitchen2 } from "@tabler/icons-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Card, Container, Divider, Grid, Group, List, Stack, Text, rem } from "@mantine/core";
@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import PropertyImages from "@/components/property/images";
 import classes from "@/components/property/Property.module.css";
 import { colors } from "@/constants/colors";
-import { formatNumberWithCommas } from "@/utils/functions";
+import { displayMonthAndYear, formatNumberWithCommas } from "@/utils/functions";
 import DownloadPdfButton from "@/components/DownloadPdfButton";
 import Head from "next/head";
 import Header from "@/components/common/header";
@@ -134,14 +134,27 @@ const DynamicProperty = () => {
                             </Stack>
                             <Divider label={<Text fz={13}>General Information</Text>} my={20} />
                             <Stack px="xl">
-                                <Group align="center">
-                                    <IconBed color="teal" size={20} />
-                                    <Text fz={14}> {property?.attributes.no_of_bedrooms} Bedrooms</Text>
-                                </Group>
-                                <Group align="center">
-                                    <IconBath color="teal" size={18} />
-                                    <Text fz={14}> {property?.attributes.no_of_bathrooms} Bathrooms</Text>
-                                </Group>
+                                {
+                                    (property?.attributes.propertyType.data.attributes.type == "Apartment" || property?.attributes.propertyType.data.attributes.type == "Town House") &&
+                                    <>
+                                        <Group align="center">
+                                            <IconBed color="teal" size={20} />
+                                            <Text fz={14}> {property?.attributes.no_of_bedrooms} Bedrooms</Text>
+                                        </Group>
+                                        <Group align="center">
+                                            <IconBath color="teal" size={18} />
+                                            <Text fz={14}> {property?.attributes.no_of_bathrooms} Bathrooms</Text>
+                                        </Group>
+                                        <Group align="center">
+                                            <IconToolsKitchen2 color="teal" size={18} />
+                                            <Text fz={14}> {property?.attributes.kitchenPlan.data.attributes.plan} Kitchen</Text>
+                                        </Group>
+                                        <Group align="center">
+                                            <IconBedFlat color="teal" size={20} />
+                                            <Text fz={14}> {property?.attributes.no_of_DSQ} DSQ</Text>
+                                        </Group>
+                                    </>
+                                }
                                 <Group align="center">
                                     <IconArrowsMaximize color="teal" size={18} />
                                     <Text fz={14}> {property?.attributes.size} {property?.attributes.size_unit.data.attributes.unit}</Text>
@@ -154,15 +167,27 @@ const DynamicProperty = () => {
                                     <IconInfoSquare color="teal" size={18} />
                                     <Text fz={14}>{property?.attributes.projectStatus.data.attributes.projectStatus}</Text>
                                 </Group>
-                            </Stack>
-                            <Divider label={<Text fz={13}>Amenities</Text>} my={20} />
-                            <Stack px="xl">
-                                {property?.attributes.amenities.data.map((el, index) => (
-                                    <Group align="center" wrap="nowrap" key={index}>
-                                        <IconRender iconName={el.attributes.icon} />
-                                        <Text fz={14}>{el.attributes.amenity}</Text>
+                                {property?.attributes.projectStatus.data.attributes.projectStatus != "Completed" &&
+                                    <Group align="center">
+                                        <IconAlarm color="teal" size={18} />
+                                        <Text fz={14}>Completion by {displayMonthAndYear(property?.attributes.expected_completion_date)}</Text>
                                     </Group>
-                                ))}
+                                }
+                            </Stack>
+                            <Divider label={<Text fz={13}>Location</Text>} my={20} />
+                            <Stack px="xl">
+                                <Group align="center" wrap="nowrap">
+                                    <IconMapPin color="teal" size={18} />
+                                    <a href={property?.attributes.locationPin} target="__blank"> Google Maps</a>
+                                </Group>
+                                <Group align="center" wrap="nowrap">
+                                    <IconMapPin color="teal" size={18} />
+                                    <Text fz={14}>{property?.attributes.location}</Text>
+                                </Group>
+                                <Group align="center" wrap="nowrap">
+                                    <IconMapPin color="teal" size={18} />
+                                    <Text fz={14}>{property?.attributes.proximity}</Text>
+                                </Group>
                             </Stack>
                         </Card>
                     </Grid.Col>
@@ -175,27 +200,13 @@ const DynamicProperty = () => {
                                 <Text mt={10}>{property?.attributes.description}</Text>
                             </Card>
                             <Card className={classes.cardShadow} radius="lg">
-                                <Text ta="center" fz={22} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Location</Text>
-                                <List c={colors.textColor} icon={
-                                    <IconMapPin style={{ width: rem(16), height: rem(16) }} color={colors.primaryColor} />
-                                }>
-                                    <List.Item>
-                                        <Group>
-                                            <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Physical Address:</Text>
-                                            <Text>{property?.attributes.location}</Text>
-                                        </Group>
-                                    </List.Item>
-                                </List>
-                                <List c={colors.textColor} icon={
-                                    <IconMapPin style={{ width: rem(16), height: rem(16) }} color={colors.primaryColor} />
-                                }>
-                                    <List.Item>
-                                        <Group>
-                                            <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Proximity:</Text>
-                                            <Text>{property?.attributes.proximity}</Text>
-                                        </Group>
-                                    </List.Item>
-                                </List>
+                                <Text ta="center" fz={22} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Amenities</Text>
+                                {property?.attributes.amenities.data.map((el, index) => (
+                                    <Group align="center" wrap="nowrap" key={index}>
+                                        <IconRender iconName={el.attributes.icon} />
+                                        <Text>{el.attributes.amenity}</Text>
+                                    </Group>
+                                ))}
                             </Card>
                             <Card className={classes.cardShadow} radius="lg">
                                 <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Payment Plan</Text>
@@ -208,8 +219,9 @@ const DynamicProperty = () => {
                             <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Reasons for Buying</Text>
                             {property?.attributes.buyingReasons.data.map((el, index) => (
                                 <Group key={index}>
-                                    <IconCheck color={colors.primaryColor} size={18} />
-                                    <Text>{el.attributes.reason}</Text>
+                                    <IconCheck color="teal" size={18} />
+                                    <Text>{el.attributes.reason}{el.attributes.reason == "Investment - Value appreciation" ? ":" : ""}</Text>
+                                    {el.attributes.reason == "Investment - Value appreciation" && <Text>Selling Price -{property.attributes.sellingPrice} Million {property?.attributes.currency.data.attributes.currency}</Text>}
                                 </Group>
                             ))}
                         </Card>
@@ -217,12 +229,12 @@ const DynamicProperty = () => {
                             <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income</Text>
                             <Group align="center">
                                 <IconCash color={colors.primaryColor} size={18} />
-                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income Unfurnished:</Text>
+                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Unfurnished:</Text>
                                 <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeUnfurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
                             </Group>
                             <Group align="center">
                                 <IconCash color={colors.primaryColor} size={18} />
-                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income Furnished:</Text>
+                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Furnished:</Text>
                                 <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeFurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
                             </Group>
                         </Card>

@@ -19,6 +19,16 @@ interface BuyingReason {
     };
 }
 
+interface KitchenPlan {
+    id: number;
+    attributes: {
+        plan: string;
+        createdAt: string;
+        updatedAt: string;
+        publishedAt: string;
+    };
+}
+
 interface ProjectStatus {
     id: number;
     attributes: {
@@ -121,13 +131,19 @@ export interface Property {
         description: string;
         no_of_bedrooms: number;
         no_of_bathrooms: number;
+        no_of_DSQ:number;
+        expected_completion_date: Date;
         size: number;
         location: string;
         proximity: string;
+        locationPin: string;
         paymentPlan: string;
+        kitchenPlan: {
+            data: KitchenPlan;
+        };
         currency: {
             data: Currency;
-        }
+        };
         buyingReasons: {
             data: BuyingReason[];
         };
