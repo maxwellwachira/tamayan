@@ -1,5 +1,5 @@
 import { Text, Container, ActionIcon, Group, rem } from '@mantine/core';
-import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
+import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram, IconBrandTiktok, IconBrandFacebook } from '@tabler/icons-react';
 import logo from '@/assets/logo-2.png';
 import classes from './Footer.module.css';
 import Image from 'next/image';
@@ -9,28 +9,28 @@ const data = [
     {
         title: 'About',
         links: [
-            { label: 'Home', link: '#' },
-            { label: 'Buy', link: '#' },
-            { label: 'Rentals', link: '#' },
-            { label: 'FAQs', link: '#' },
+            { label: 'Home', link: '/' },
+            { label: 'Rentals', link: '/property/rentals' },
+            { label: 'Airbnbs', link: '/propery/airbnb' },
+            { label: 'FAQs', link: '/faqs' },
         ],
     },
     {
         title: 'Buy',
         links: [
-            { label: 'Apartments', link: '#' },
-            { label: 'Offices', link: '#' },
-            { label: 'Warehouses', link: '#' },
-            { label: 'Town Houses', link: '#' },
+            { label: 'Apartments', link: '/property/onsale/apartments' },
+            { label: 'Offices', link: '/property/onsale/offices' },
+            { label: 'Warehouses', link: '/property/onsale/townhouses' },
+            { label: 'Town Houses', link: '/property/onsale/warehouses' },
         ],
     },
     {
         title: 'Social',
         links: [
-            { label: 'Twitter', link: '#' },
-            { label: 'Facebook', link: '#' },
-            { label: 'Instagram', link: '#' },
-            { label: 'Linkedin', link: '#' },
+            { label: 'Tiktok', link: 'https://www.tiktok.com/@tamayan.properties' },
+            { label: 'Instagram', link: 'https://www.instagram.com/tamayanproperties/' },
+            { label: 'Facebook', link: 'https://web.facebook.com/tamayanproperties' },
+           
         ],
     },
 ];
@@ -43,7 +43,7 @@ const Footer = () => {
                 className={classes.link}
                 component="a"
                 href={link.link}
-                onClick={(event) => event.preventDefault()}
+                target={group.title == "Social" ? "_blank" : "_self"}
             >
                 {link.label}
             </Text>
@@ -80,13 +80,13 @@ const Footer = () => {
                 </Text>
 
                 <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
-                    <ActionIcon size="lg" color="gray" variant="subtle">
-                        <IconBrandTwitter style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
+                    <ActionIcon size="lg" color="gray" variant="subtle" component='a' target='__blank' href='https://www.tiktok.com/@tamayan.properties'>
+                        <IconBrandTiktok style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
                     </ActionIcon>
-                    <ActionIcon size="lg" color="gray" variant="subtle">
-                        <IconBrandYoutube style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
+                    <ActionIcon size="lg" color="gray" variant="subtle" component='a' target='__blank' href='https://web.facebook.com/tamayanproperties'>
+                        <IconBrandFacebook style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
                     </ActionIcon>
-                    <ActionIcon size="lg" color="gray" variant="subtle">
+                    <ActionIcon size="lg" color="gray" variant="subtle" component='a' target='__blank' href='https://www.instagram.com/tamayanproperties/'>
                         <IconBrandInstagram style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>
