@@ -1,6 +1,6 @@
 import { urls } from "@/constants/urls";
 import { Property } from "@/utils/interfaces";
-import { IconAlarm, IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBedFlat, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoHexagon, IconInfoSquare, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming, IconToolsKitchen2 } from "@tabler/icons-react";
+import { IconAlarm, IconArrowsMaximize, IconBarbell, IconBath, IconBed, IconBedFlat, IconBeer, IconBrandIntercom, IconCash, IconCheck, IconCheckbox, IconClockHour9, IconDroplet, IconDropletHalfFilled, IconGardenCart, IconInfoHexagon, IconInfoSquare, IconInfoSquareRounded, IconMapPin, IconParking, IconShieldChevron, IconSolarPanel2, IconSwimming, IconToolsKitchen2 } from "@tabler/icons-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Card, Container, Divider, Grid, Group, List, Stack, Text, rem } from "@mantine/core";
@@ -125,20 +125,30 @@ const DynamicProperty = () => {
                     <Grid.Col span={{ base: 12, md: 12, lg: 3 }}>
                         <Card className={classes.cardShadow} radius="lg">
                             <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>{property?.attributes.propertyType.data.attributes.type} Information</Text>
-                            <Divider label={<Text fz={13}>Asking Price</Text>} my={20} />
+                            <Divider label={<Text fz={13}>Asking Price</Text>} my={15} px={15} />
                             <Stack px="xl">
                                 <Group align="center">
                                     <IconCash color="teal" size={20} />
                                     <Text fz={14}>{property?.attributes.buyingPrice} Million {property?.attributes.currency.data.attributes.currency}</Text>
                                 </Group>
                             </Stack>
-                            <Divider label={<Text fz={13}>General Information</Text>} my={20} />
+                            { property?.attributes.buyingReasons.data.some(reason => reason.attributes.reason === "Investment - Value appreciation") &&
+                                <>
+                                    <Divider label={<Text fz={13}>Selling Price</Text>} my={15} px={15} />
+                                    <Stack px="xl">
+                                        <Group align="center">
+                                            <IconCash color="teal" size={20} />
+                                            <Text fz={14}>{property?.attributes.sellingPrice} Million {property?.attributes.currency.data.attributes.currency}</Text>
+                                        </Group>
+                                    </Stack></>
+                            }
+                            <Divider label={<Text fz={13}>General Information</Text>} my={15} px={15}/>
                             <Stack px="xl">
                                 {
                                     (property?.attributes.propertyType.data.attributes.type == "Apartment" || property?.attributes.propertyType.data.attributes.type == "Town House") &&
                                     <>
                                         <Group align="center">
-                                            <IconBed color="teal" size={20} />
+                                            <IconBed color="teal" size={18} />
                                             <Text fz={14}> {property?.attributes.no_of_bedrooms} Bedrooms</Text>
                                         </Group>
                                         <Group align="center">
@@ -150,7 +160,7 @@ const DynamicProperty = () => {
                                             <Text fz={14}> {property?.attributes.kitchenPlan.data.attributes.plan} Kitchen</Text>
                                         </Group>
                                         <Group align="center">
-                                            <IconBedFlat color="teal" size={20} />
+                                            <IconBedFlat color="teal" size={18} />
                                             <Text fz={14}> {property?.attributes.no_of_DSQ} DSQ</Text>
                                         </Group>
                                     </>
@@ -161,20 +171,24 @@ const DynamicProperty = () => {
                                 </Group>
 
                             </Stack>
-                            <Divider label={<Text fz={13}>Project Status</Text>} my={20} />
+                            <Divider label={<Text fz={13}>Project Status</Text>} my={15} px={15} />
                             <Stack px="xl">
                                 <Group align="center">
                                     <IconInfoSquare color="teal" size={18} />
                                     <Text fz={14}>{property?.attributes.projectStatus.data.attributes.projectStatus}</Text>
                                 </Group>
-                                {property?.attributes.projectStatus.data.attributes.projectStatus != "Completed" &&
+                                {property?.attributes.projectStatus.data.attributes.projectStatus === "Completed" ?
+                                    <Group align="center">
+                                        <IconAlarm color="teal" size={18} />
+                                        <Text fz={14}>Completed on {property.attributes.completionYear}</Text>
+                                    </Group> :
                                     <Group align="center">
                                         <IconAlarm color="teal" size={18} />
                                         <Text fz={14}>Completion by {displayMonthAndYear(property?.attributes.expected_completion_date)}</Text>
                                     </Group>
                                 }
                             </Stack>
-                            <Divider label={<Text fz={13}>Location</Text>} my={20} />
+                            <Divider label={<Text fz={13}>Location</Text>} my={15} px={15} />
                             <Stack px="xl">
                                 <Group align="center" wrap="nowrap">
                                     <IconMapPin color="teal" size={18} />
@@ -202,8 +216,8 @@ const DynamicProperty = () => {
                             <Card className={classes.cardShadow} radius="lg">
                                 <Text ta="center" fz={22} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Amenities</Text>
                                 {property?.attributes.amenities.data.map((el, index) => (
-                                    <Group align="center" wrap="nowrap" key={index}>
-                                        <IconRender iconName={el.attributes.icon} />
+                                    <Group align="center" wrap="nowrap" key={index} mt={5}>
+                                        <IconCheckbox color="teal" size={18} />
                                         <Text>{el.attributes.amenity}</Text>
                                     </Group>
                                 ))}
@@ -218,8 +232,8 @@ const DynamicProperty = () => {
                         <Card className={classes.cardShadow} radius="lg">
                             <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Reasons for Buying</Text>
                             {property?.attributes.buyingReasons.data.map((el, index) => (
-                                <Group key={index}>
-                                    <IconCheck color="teal" size={18} />
+                                <Group key={index} mt={5}>
+                                    <IconCheckbox color="teal" size={18} />
                                     <Text>{el.attributes.reason}{el.attributes.reason == "Investment - Value appreciation" ? ":" : ""}</Text>
                                     {el.attributes.reason == "Investment - Value appreciation" && <Text>Selling Price -{property.attributes.sellingPrice} Million {property?.attributes.currency.data.attributes.currency}</Text>}
                                 </Group>
@@ -227,12 +241,12 @@ const DynamicProperty = () => {
                         </Card>
                         <Card mt={20} className={classes.cardShadow} radius="lg" px={20}>
                             <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income</Text>
-                            <Group align="center">
+                            <Group align="center" mt={5}>
                                 <IconCash color={colors.primaryColor} size={18} />
                                 <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Unfurnished:</Text>
                                 <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeUnfurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
                             </Group>
-                            <Group align="center">
+                            <Group align="center" mt={5}>
                                 <IconCash color={colors.primaryColor} size={18} />
                                 <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Furnished:</Text>
                                 <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeFurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
@@ -240,15 +254,25 @@ const DynamicProperty = () => {
                         </Card>
                         <Card mt={20} className={classes.cardShadow} radius="lg">
                             <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Other Details</Text>
-                            <Group align="center">
-                                <IconInfoHexagon color={colors.primaryColor} size={18} />
+                            <Group align="center" mt={5}>
+                                <IconInfoSquareRounded color={colors.primaryColor} size={18} />
                                 <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>SoldOut:</Text>
                                 <Text>{`${property?.attributes.soldout}`}</Text>
                             </Group>
-                            <Group align="center">
-                                <IconInfoHexagon color={colors.primaryColor} size={18} />
+                            <Group align="center" mt={5}>
+                                <IconInfoSquareRounded color={colors.primaryColor} size={18} />
+                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Total Units:</Text>
+                                <Text>{property?.attributes.no_of_units} units</Text>
+                            </Group>
+                            <Group align="center" mt={5}>
+                                <IconInfoSquareRounded color={colors.primaryColor} size={18} />
                                 <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Available Units:</Text>
                                 <Text>{property?.attributes.unitsAvailable} units</Text>
+                            </Group>
+                            <Group align="center" mt={5}>
+                                <IconInfoSquareRounded color={colors.primaryColor} size={18} />
+                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>No. of Floors:</Text>
+                                <Text>{property?.attributes.no_of_floors}</Text>
                             </Group>
                         </Card>
                         <Stack mt={30}>

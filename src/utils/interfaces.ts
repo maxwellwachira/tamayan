@@ -132,6 +132,9 @@ export interface Property {
         no_of_bedrooms: number;
         no_of_bathrooms: number;
         no_of_DSQ:number;
+        no_of_units: number;
+        no_of_floors: number;
+        completionYear: number;
         expected_completion_date: Date;
         size: number;
         location: string;
