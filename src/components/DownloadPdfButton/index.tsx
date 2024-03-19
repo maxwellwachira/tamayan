@@ -11,6 +11,7 @@ const DownloadPdfButton: React.FC<DownloadPdfButtonProps> = ({ pdfUrl, fileName,
         const link = document.createElement("a");
         link.href = pdfUrl;
         link.download = fileName;
+        link.target = '__blank'
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
