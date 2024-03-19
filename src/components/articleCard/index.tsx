@@ -8,6 +8,7 @@ import {
   Center,
   useMantineTheme,
   Button,
+  Box
 } from '@mantine/core';
 import classes from './ArticleCard.module.css';
 import { colors } from '@/constants/colors';
@@ -27,7 +28,7 @@ export function ArticleCard({ id, propertyType, image, title, description, foote
   const theme = useMantineTheme();
 
   return (
-    <Card withBorder radius="md" className={classes.card}>
+    <Card withBorder radius="md" className={classes.card} style={{ height: "100%" }}>
       <Card.Section>
         <a {...linkProps}>
           <Image src={image} height={180} />
@@ -40,27 +41,31 @@ export function ArticleCard({ id, propertyType, image, title, description, foote
           {propertyType}
         </Badge>
       }
+      <Box component='div'>
+        <Text className={classes.title} fw={500} component="a" {...linkProps}>
+          {title}
+        </Text>
+      </Box>
+      <Box component='div'>
+        <Text fz="sm" c="dimmed" lineClamp={4}>
+          {description}
+        </Text>
+      </Box>
 
-      <Text className={classes.title} fw={500} component="a" {...linkProps}>
-        {title}
-      </Text>
+      <Box style={{ position: "relative", height: "100%", flex:1, marginTop: 50 }}>
+        <Group justify="space-between" className={classes.footer} align='center' style={{ position: "absolute", bottom: 0, width: "100%" }}>
+          <Center>
+            <Icon color={colors.secondaryColor} />
+            <Text fz="xs" inline ml={10} c={colors.primaryColor}>
+              {footerTitle}
+            </Text>
+          </Center>
 
-      <Text fz="sm" c="dimmed" lineClamp={4}>
-        {description}
-      </Text>
-
-      <Group justify="space-between" className={classes.footer} align='center'>
-        <Center>
-          <Icon color={colors.secondaryColor} />
-          <Text fz="xs" inline ml={10} c={colors.primaryColor}>
-            {footerTitle}
-          </Text>
-        </Center>
-
-        <Group gap={8} mr={0}>
-          <Button variant="outline" size="xs" color="dark" radius="sm" component='a' href={`/property/${id}`}>See More</Button>
+          <Group gap={8} mr={0}>
+            <Button variant="outline" size="xs" color="dark" radius="sm" component='a' href={`/property/${id}`}>See More</Button>
+          </Group>
         </Group>
-      </Group>
+      </Box>
     </Card>
   );
 }

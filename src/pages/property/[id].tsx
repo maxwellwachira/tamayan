@@ -129,7 +129,7 @@ const DynamicProperty = () => {
                             <Stack px="xl">
                                 <Group align="center">
                                     <IconCash color="teal" size={20} />
-                                    <Text fz={14}>{property?.attributes.buyingPrice} Million {property?.attributes.currency.data.attributes.currency}</Text>
+                                    <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency != "KES" ? "" : "Million"} {property?.attributes.currency.data.attributes.currency}</Text>
                                 </Group>
                             </Stack>
                             {property?.attributes.buyingReasons.data.some(reason => reason.attributes.reason === "Investment - Value appreciation" && property.attributes.sellingPrice != null) &&
@@ -138,7 +138,7 @@ const DynamicProperty = () => {
                                     <Stack px="xl">
                                         <Group align="center">
                                             <IconCash color="teal" size={20} />
-                                            <Text fz={14}>{property?.attributes.sellingPrice} Million {property?.attributes.currency.data.attributes.currency}</Text>
+                                            <Text fz={14}>{property?.attributes.sellingPrice} {property?.attributes.currency.data.attributes.currency != "KES" ? "" : "Million"} {property?.attributes.currency.data.attributes.currency}</Text>
                                         </Group>
                                     </Stack></>
                             }
@@ -242,7 +242,7 @@ const DynamicProperty = () => {
                             {property?.attributes.proximity.split("√").map((el, index) => (
                                 <>
                                     {index > 0 &&
-                                        <Group key={index}>
+                                        <Group key={index*456}>
                                             <IconMapPin color="teal" size={18} />
                                             <Text>{el}</Text>
                                         </Group>
