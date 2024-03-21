@@ -46,18 +46,18 @@ export function ArticleCard({ id, propertyType, image, title, description, foote
           {title}
         </Text>
       </Box>
-      <Box component='div'>
+      <Box component='div' flex={1}>
         <Text fz="sm" c="dimmed" lineClamp={4}>
           {description}
         </Text>
       </Box>
 
-      <Box style={{ position: "relative", height: "100%", flex:1, marginTop: 50 }}>
-        <Group justify="space-between" className={classes.footer} align='center' style={{ position: "absolute", bottom: 0, width: "100%" }}>
+      <Box >
+        <Group justify="space-between" className={classes.footer} align='center' >
           <Center>
             <Icon color={colors.secondaryColor} />
             <Text fz="xs" inline ml={10} c={colors.primaryColor}>
-              {footerTitle}
+              {(footerTitle)}
             </Text>
           </Center>
 

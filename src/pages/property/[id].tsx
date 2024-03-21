@@ -295,7 +295,7 @@ const DynamicProperty = () => {
                             }
                             <Group align="center" mt={5}>
                                 <IconInfoSquareRounded color={colors.primaryColor} size={18} />
-                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>No. of Floors:</Text>
+                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Total No. of Floors:</Text>
                                 <Text>{property?.attributes.no_of_floors}</Text>
                             </Group>
                         </Card>
