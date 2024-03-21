@@ -278,7 +278,7 @@ const DynamicProperty = () => {
                             <Group align="center" mt={5}>
                                 <IconInfoSquareRounded color={colors.primaryColor} size={18} />
                                 <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>SoldOut:</Text>
-                                <Text>{`${property?.attributes.soldout}`}</Text>
+                                <Text>{property?.attributes.soldout ? "Yes" : "No"}</Text>
                             </Group>
                             <Group align="center" mt={5}>
                                 <IconInfoSquareRounded color={colors.primaryColor} size={18} />
