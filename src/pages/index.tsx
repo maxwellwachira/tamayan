@@ -20,8 +20,8 @@ const HomePage = () => {
       <Header />
       <HomePageHero />
       <PropertyType />
-      <FeaturesCards />
       <FeaturedProperties />
+      <FeaturesCards />
       <Stats />
       <Subscribe />
       <Footer />
