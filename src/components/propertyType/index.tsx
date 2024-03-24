@@ -13,7 +13,7 @@ const PropertyType = () => {
             <Text ta="center" className={classes.title}>Property Types</Text>
             <Grid mt={30} gutter={30}>
                 <Grid.Col span={{ base: 12, md: 3 }}>
-                    <Card withBorder shadow="sm" padding="lg" radius="lg" >
+                    <Card withBorder shadow="sm" padding="lg" radius="lg" component="a" href="/property/onsale/apartments">
                         <Card.Section>
                             <Stack align="center" justify="center" style={{height: 150}}>
                                 <Image
@@ -28,7 +28,7 @@ const PropertyType = () => {
                     </Card>
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 3 }}>
-                    <Card withBorder shadow="sm" padding="lg" radius="lg" >
+                    <Card withBorder shadow="sm" padding="lg" radius="lg" component="a" href="/property/onsale/offices">
                         <Card.Section>
                             <Stack align="center" justify="center" style={{height: 150}}>
                                 <Image
@@ -43,7 +43,7 @@ const PropertyType = () => {
                     </Card>
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 3 }}>
-                    <Card withBorder shadow="sm" padding="lg" radius="lg" >
+                    <Card withBorder shadow="sm" padding="lg" radius="lg" component="a" href="/property/onsale/warehouses">
                         <Card.Section>
                             <Stack align="center" justify="center" style={{height: 150}}>
                                 <Image
@@ -58,7 +58,7 @@ const PropertyType = () => {
                     </Card>
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 3 }}>
-                    <Card withBorder shadow="sm" padding="lg" radius="lg" >
+                    <Card withBorder shadow="sm" padding="lg" radius="lg" component="a" href="/property/onsale/townhouses">
                         <Card.Section>
                             <Stack align="center" justify="center" style={{height: 150}}>
                                 <Image
