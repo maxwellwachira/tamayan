@@ -1,11 +1,11 @@
-import { Badge, Card, Container, Grid, Group, Loader, Stack, Text } from "@mantine/core";
+import { Badge, Card, Container, Grid, Group, Loader, Pagination, Select, Stack, Text } from "@mantine/core";
 import { SearchBar } from "../searchbar";
 import { colors } from "@/constants/colors";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { urls } from "@/constants/urls";
 import axios from "axios";
-import { Property } from "@/utils/interfaces";
+import { ApiResponse, Property } from "@/utils/interfaces";
 import { ArticleCard } from "../articleCard";
 import Image from "next/image";
 import noresults from "@/assets/no-results.png";
@@ -14,21 +14,26 @@ import { IconBuilding } from "@tabler/icons-react";
 
 const ApartmentsOnly = () => {
     const [findings, setFindings] = useState<Property[] | null>(null);
+    const [allData, setAllData] = useState<ApiResponse | null>(null)
     const [loading, setLoading] = useState(false);
+    const [activePage, setActivePage] = useState(1);
+    const [pageSize, setpageSize] = useState<string | null>('20');
+
     const router = useRouter();
     const { location, beds, reason } = router.query;
 
     const fetchApartments = async () => {
         setLoading(true);
         let filter = '&filters[propertyType][type][$eq]=Apartment';
-        if (location &&  Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
+        if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
         if (beds && Number(beds) != 0) filter = filter + `&filters[no_of_bedrooms][$eq]=${beds}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
         console.log(filter);
         try {
-            const { data } = await axios.get(`${urls.strapiUrl}/properties?populate=*${filter}`);
+            const { data } = await axios.get(`${urls.strapiUrl}/properties?pagination[page]=${activePage}&pagination[pageSize]=${pageSize}&populate=*${filter}`);
             console.log(data);
             setFindings(data.data);
+            setAllData(data);
         } catch (error) {
             console.log(error)
         }
@@ -40,11 +45,16 @@ const ApartmentsOnly = () => {
         return (
             <>
                 {findings?.map((el) => (
-                    <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
-                        <Stack align='center'>
-                            <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
-                        </Stack>
-                    </Grid.Col>
+                    <>
+                        {
+                            el.attributes.images.data &&
+                            <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
+                                <Stack align='center'>
+                                    <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
+                                </Stack>
+                            </Grid.Col>
+                        }
+                    </>
                 ))}
             </>
         )
@@ -52,7 +62,7 @@ const ApartmentsOnly = () => {
 
     useEffect(() => {
         fetchApartments();
-    }, [router.query])
+    }, [router.query, activePage, pageSize])
 
     return (
         <Container mt={30} size="lg">
@@ -65,14 +75,31 @@ const ApartmentsOnly = () => {
                 <>
                     {(findings && findings.length > 0) ?
                         <>
-                            <Stack mt={30} justify="center" align="center">
+                            <Group mt={30} justify="center" align="center" gap={30}>
                                 <Badge variant="gradient" gradient={{ from: 'blue', to: 'teal' }} size="lg">
                                     {findings.length} {findings.length > 1 ? "results" : "result"} found
                                 </Badge>
-                            </Stack>
+                                <Group gap={10}>
+                                <Text fz={14}>Apartments Per page:</Text>
+                                <Select 
+                                    data={['20', '30', '40', '50']} 
+                                    radius={5} 
+                                    size="xs" 
+                                    placeholder="Select Page size"
+                                    value={pageSize}
+                                    onChange={setpageSize}
+                                    style={{
+                                        width: 70
+                                    }}
+                                />
+                                </Group>
+                            </Group>
                             <Grid mt={20}>
                                 {displayResults()}
                             </Grid>
+                            <Stack align="center" justify="center" mt={30}>
+                                <Pagination total={allData ? allData.meta.pagination.pageCount : 1} value={activePage} onChange={setActivePage} mt="sm" color="teal" />
+                            </Stack>
                         </>
                         :
                         <Stack justify="center" align="center" mt={20}>

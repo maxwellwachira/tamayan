@@ -11,7 +11,7 @@ const HomePageHero = () => {
     const mdBreakPoint = useMediaQuery('(max-width: 62em)');
     return (
         <Box className={classes.heroBackground} mt={8}>
-            <Grid maw={1295} mah={688}>
+            <Grid maw={1295} mah={600}>
                 <Grid.Col span={{ base: 12, md: 6 }}>
                     <Stack justify="center" style={{ height: "70%" }} mt={smBreakPoint ? 40 : mdBreakPoint ? 60: 0}>
                         <Text className={classes.title}>Unlock Your Perfect Space: Buy or Rent, Your Property Awaits!</Text>
@@ -25,7 +25,7 @@ const HomePageHero = () => {
                                 src={apartmentImage}
                                 alt="Apartment Image"
                                 width={650}
-                                height={670}
+                                height={600}
                             />
                         </Stack>
                     }

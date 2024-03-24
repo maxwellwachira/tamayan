@@ -54,11 +54,6 @@ const SearchBar = () => {
     { value: "4", label: "4 Bedrooms" },
     { value: "5", label: "5 Bedrooms" },
     { value: "6", label: "6 Bedrooms" },
-    { value: "7", label: "7 Bedrooms" },
-    { value: "8", label: "8 Bedrooms" },
-    { value: "9", label: "9 Bedrooms" },
-    { value: "10", label: "10 Bedrooms" },
-    { value: "11", label: "11 Bedrooms" },
   ];
 
   const spaceRange = [
