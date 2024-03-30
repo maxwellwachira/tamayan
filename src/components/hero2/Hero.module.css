@@ -15,7 +15,7 @@
   color: white;
   font-family: "Patrick Hand", cursive;
   font-size: rem(44px);
-  margin-left: 50px;
+  margin-left: 130px;
   font-weight: 500;
 
   @media (max-width: $mantine-breakpoint-xs) {
@@ -26,9 +26,9 @@
 
 .subtitle {
   color: white;
-  font-size: rem(20px);
-  margin-left: 50px;
-  font-weight: 500;
+  font-size: rem(23px);
+  margin-left: 130px;
+  font-weight: 550;
 
   @media (max-width: $mantine-breakpoint-xs) {
     font-size: rem(18px);
