@@ -15,7 +15,7 @@ const HomePageHero = () => {
                 <Grid maw={1295} mah={600}>
                     <Grid.Col span={{ base: 12, md: 6 }}>
                         <Stack justify="center" style={{ height: "70%" }} mt={smBreakPoint ? 40 : mdBreakPoint ? 60 : 0}>
-                            <Text className={classes.title}>Unlock Your Perfect Space: Buy or Rent, Your Property Awaits!</Text>
+                            <Text className={classes.title}>Unlock Your Perfect Space: Buy or Rent; Your Property Awaits!</Text>
                             <Text className={classes.subtitle}>Find the perfect space to call your own or rent. Start your journey to finding your dream property today!</Text>
                         </Stack>
                     </Grid.Col>
