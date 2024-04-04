@@ -10,6 +10,7 @@ import { ArticleCard } from "../articleCard";
 import Image from "next/image";
 import noresults from "@/assets/no-results.png";
 import { IconBuilding } from "@tabler/icons-react";
+import { formatNumberWithCommas } from "@/utils/functions";
 
 
 const WarehouseOnly = () => {
@@ -42,7 +43,7 @@ const WarehouseOnly = () => {
                 {findings?.map((el) => (
                     <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
                         <Stack align='center'>
-                            <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
+                            <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${formatNumberWithCommas(el.attributes.buyingPrice)} ${el.attributes.currency.data.attributes.currency} per ${el.attributes.size_unit.data.attributes.unit}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
                         </Stack>
                     </Grid.Col>
                 ))}

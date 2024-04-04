@@ -129,12 +129,18 @@ const DynamicProperty = () => {
                             <Stack px="xl">
                                 <Group align="center">
                                     <IconCash color="teal" size={20} />
-                                    <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency != "KES" ? "" : "Million"} {property?.attributes.currency.data.attributes.currency}</Text>
+
+                                    {(property?.attributes.propertyType.data.attributes.type == "Office" || property?.attributes.propertyType.data.attributes.type == "Warehouse") ?
+                                        <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency} per {property?.attributes.size_unit.data.attributes.unit}</Text>
+                                        :
+                                        <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency != "KES" ? "" : "Million"} {property?.attributes.currency.data.attributes.currency}</Text>
+                                    }
+
                                 </Group>
                             </Stack>
                             {property?.attributes.buyingReasons.data.some(reason => reason.attributes.reason === "Investment - Value appreciation" && property.attributes.sellingPrice != null) &&
                                 <>
-                                    <Divider label={<Text fz={14} c={"dark"} fw="bold">Selling Price</Text>} my={10} px={15} color={"dark"}/>
+                                    <Divider label={<Text fz={14} c={"dark"} fw="bold">Selling Price</Text>} my={10} px={15} color={"dark"} />
                                     <Stack px="xl">
                                         <Group align="center">
                                             <IconCash color="teal" size={20} />
@@ -142,7 +148,7 @@ const DynamicProperty = () => {
                                         </Group>
                                     </Stack></>
                             }
-                            <Divider label={<Text fz={14} c={"dark"} fw="bold">General Information</Text>} my={10} px={15} color={"dark"}/>
+                            <Divider label={<Text fz={14} c={"dark"} fw="bold">General Information</Text>} my={10} px={15} color={"dark"} />
                             <Stack px="xl">
                                 {
                                     (property?.attributes.propertyType.data.attributes.type == "Apartment" || property?.attributes.propertyType.data.attributes.type == "Town House") &&
@@ -171,7 +177,7 @@ const DynamicProperty = () => {
                                 </Group>
 
                             </Stack>
-                            <Divider label={<Text fz={14} c={"dark"} fw="bold">Project Status</Text>} my={10} px={15} color={"dark"}/>
+                            <Divider label={<Text fz={14} c={"dark"} fw="bold">Project Status</Text>} my={10} px={15} color={"dark"} />
                             <Stack px="xl">
                                 <Group align="center">
                                     <IconInfoSquare color="teal" size={18} />
@@ -188,7 +194,7 @@ const DynamicProperty = () => {
                                     </Group>
                                 }
                             </Stack>
-                            <Divider label={<Text fz={14} c={"dark"} fw="bold">Location</Text>} my={10} px={15} color={"dark"}/>
+                            <Divider label={<Text fz={14} c={"dark"} fw="bold">Location</Text>} my={10} px={15} color={"dark"} />
                             <Stack px="xl">
                                 <Group align="center" wrap="nowrap">
                                     <IconMapPin color="teal" size={18} />
@@ -202,13 +208,13 @@ const DynamicProperty = () => {
                             {
                                 property?.attributes.videoUrl &&
                                 <>
-                                <Divider label={<Text fz={14} c={"dark"} fw="bold">360° View</Text>} my={10} px={15} color={"dark"}/>
-                                <Stack px="xl">
-                                    <Group>
-                                        <IconRotate360 color="teal" size={18}/>
-                                        <a href={property?.attributes.videoUrl} target="__blank"> 3D view</a>
-                                    </Group>
-                                </Stack>
+                                    <Divider label={<Text fz={14} c={"dark"} fw="bold">360° View</Text>} my={10} px={15} color={"dark"} />
+                                    <Stack px="xl">
+                                        <Group>
+                                            <IconRotate360 color="teal" size={18} />
+                                            <a href={property?.attributes.videoUrl} target="__blank"> 3D view</a>
+                                        </Group>
+                                    </Stack>
                                 </>
                             }
                         </Card>
@@ -242,7 +248,7 @@ const DynamicProperty = () => {
                             {property?.attributes.proximity.split("√").map((el, index) => (
                                 <>
                                     {index > 0 &&
-                                        <Group key={index*456}>
+                                        <Group key={index * 456}>
                                             <IconMapPin color="teal" size={18} />
                                             <Text>{el}</Text>
                                         </Group>
@@ -260,19 +266,21 @@ const DynamicProperty = () => {
                                 </Group>
                             ))}
                         </Card>
-                        <Card mt={20} className={classes.cardShadow} radius="lg" px={20}>
-                            <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income</Text>
-                            <Group align="center" mt={5}>
-                                <IconCash color={colors.primaryColor} size={18} />
-                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Unfurnished:</Text>
-                                <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeUnfurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
-                            </Group>
-                            <Group align="center" mt={5}>
-                                <IconCash color={colors.primaryColor} size={18} />
-                                <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Furnished:</Text>
-                                <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeFurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
-                            </Group>
-                        </Card>
+                        {(property?.attributes.propertyType.data.attributes.type == "Apartment" || property?.attributes.propertyType.data.attributes.type == "Town House") &&
+                            <Card mt={20} className={classes.cardShadow} radius="lg" px={20}>
+                                <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Rental Income</Text>
+                                <Group align="center" mt={5}>
+                                    <IconCash color={colors.primaryColor} size={18} />
+                                    <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Unfurnished:</Text>
+                                    <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeUnfurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
+                                </Group>
+                                <Group align="center" mt={5}>
+                                    <IconCash color={colors.primaryColor} size={18} />
+                                    <Text ta="center" fz={18} c={colors.primaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Furnished:</Text>
+                                    <Text>{formatNumberWithCommas(property?.attributes.rentalIncomeFurnished)} {property?.attributes.currency.data.attributes.currency}</Text>
+                                </Group>
+                            </Card>
+                        }
                         <Card mt={20} className={classes.cardShadow} radius="lg">
                             <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Other Details</Text>
                             <Group align="center" mt={5}>

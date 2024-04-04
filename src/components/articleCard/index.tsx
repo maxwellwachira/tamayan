@@ -56,14 +56,11 @@ export function ArticleCard({ id, propertyType, image, title, description, foote
         <Group justify="space-between" className={classes.footer} align='center' >
           <Center>
             <Icon color={colors.secondaryColor} />
-            <Text fz="xs" inline ml={10} c={colors.primaryColor}>
+            <Text fz="xs" inline ml={5} c={colors.primaryColor}>
               {(footerTitle)}
             </Text>
           </Center>
-
-          <Group gap={8} mr={0}>
-            <Button variant="outline" size="xs" color="dark" radius="sm" component='a' href={`/property/${id}`}>See More</Button>
-          </Group>
+          <Button variant="outline" size="xs" color="dark" radius="sm" component='a' href={`/property/${id}`}>See More</Button>
         </Group>
       </Box>
     </Card>
