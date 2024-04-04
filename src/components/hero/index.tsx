@@ -11,10 +11,12 @@ import { formatNumberWithCommas } from '@/utils/functions';
 
 const FeaturedProperties = () => {
     const [properties, setProperties] = useState<Property[] | null>(null);
+    const [activePage, setActivePage] = useState(1);
+    const [pageSize, setPageSize] = useState(50);
 
     const fetchProperties = async () => {
         try {
-            const { data } = await axios.get(`${urls.strapiUrl}/properties?populate=*&filters[featured][$eq]=${true}`);
+            const { data } = await axios.get(`${urls.strapiUrl}/properties?populate=*&filters[featured][$eq]=${true}&pagination[page]=${activePage}&pagination[pageSize]=${pageSize}`);
             // console.log(data.data)
             setProperties(data.data);
         } catch (error) {
@@ -24,8 +26,13 @@ const FeaturedProperties = () => {
 
     const featuredProperties = properties?.map((el) => (
         <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
-            <Stack align='center'  style={{height: "100%"}}>
-                <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${formatNumberWithCommas(el.attributes.buyingPrice)} ${el.attributes.currency.data.attributes.currency == 'KES' ? 'Million' : ''} ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
+            <Stack align='center' style={{ height: "100%" }}>
+                <ArticleCard
+                    id={el.id}
+                    image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName}
+                    description={el.attributes.summary}
+                    footerTitle={`${formatNumberWithCommas(el.attributes.buyingPrice)} ${el.attributes.currency.data.attributes.currency == 'KES' ? (el.attributes.propertyType.data.attributes.type === "Apartment" || el.attributes.propertyType.data.attributes.type === "Villa") ? "Million": '' : ""} ${el.attributes.currency.data.attributes.currency} ${(el.attributes.propertyType.data.attributes.type === "Office" || el.attributes.propertyType.data.attributes.type === "Warehouse") ? `per ${el.attributes.size_unit.data.attributes.unit}` : ""}`}
+                    Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
             </Stack>
         </Grid.Col>
     ))
@@ -34,7 +41,7 @@ const FeaturedProperties = () => {
         fetchProperties();
     }, []);
 
-    
+
     return (
         <Container size="lg" mt={50}>
             <Text ta="center" mb={30} className={classes.title}>Featured Properties</Text>
