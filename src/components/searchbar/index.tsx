@@ -90,43 +90,49 @@ const SearchBar = () => {
       if (location) query = query + `&location=${location}`;
       if (beds) query = query + `&beds=${beds}`;
       if (reason) query = query + `&reason=${reason}`;
-      console.log(query);
+      // console.log(query);
       router.push(`/property/onsale/apartments/${query}`);
     } else if (router.pathname === "/property/onsale/townhouses") {
       let query = `?propertyType=${encodeURIComponent("Town House")}`;
       if (location) query = query + `&location=${location}`;
       if (beds) query = query + `&beds=${beds}`;
       if (reason) query = query + `&reason=${reason}`;
-      console.log(query);
+      // console.log(query);
       router.push(`/property/onsale/townhouses/${query}`);
     } else if (router.pathname === "/property/onsale/warehouses") {
       let query = `?propertyType=${encodeURIComponent("Warehouse")}`;
       if (location) query = query + `&location=${location}`;
       if (size) query = query + `&size=${size}`;
       if (reason) query = query + `&reason=${reason}`;
-      console.log(query);
+      // console.log(query);
       router.push(`/property/onsale/warehouses/${query}`);
     } else if (router.pathname === "/property/onsale/offices") {
       let query = `?propertyType=${encodeURIComponent("Office")}`;
       if (location) query = query + `&location=${location}`;
       if (size) query = query + `&size=${size}`;
       if (reason) query = query + `&reason=${reason}`;
-      console.log(query);
+      // console.log(query);
       router.push(`/property/onsale/offices/${query}`);
     }else if (router.pathname === "/property/rentals"){
       let query = `?propertyType=${encodeURIComponent("Rentals")}`;
       if (location) query = query + `&location=${location}`;
       if (rent) query = query + `&rent=${rent}`;
       if (beds) query = query + `&beds=${beds}`;
-      console.log(query);
+      // console.log(query);
       router.push(`/property/rentals/${query}`);
     }else if (router.pathname === "/property/airbnb"){
       let query = `?propertyType=${encodeURIComponent("Airbnb")}`;
       if (location) query = query + `&location=${location}`;
       if (dailyCharges) query = query + `&dailyCharges=${dailyCharges}`;
       if (beds) query = query + `&beds=${beds}`;
-      console.log(query);
+      // console.log(query);
       router.push(`/property/airbnb/${query}`);
+    }else if (router.pathname === "/search"){
+      let query = `?`;
+      if (location) query = query + `&location=${location}`;
+      if (propertyType) query = query + `&propertyType=${propertyType}`;
+      // console.log(query);
+      router.push(`/search/${query}`);
     }
   }
 

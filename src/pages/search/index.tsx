@@ -34,7 +34,7 @@ const SearchProperties = () => {
         if (propertyType && Number(propertyType) != 0) filters = filters + `filters[propertyType][type][$eq]=${propertyType}`;
         try {
             const { data } = await axios.get(`${urls.strapiUrl}/properties?pagination[page]=${activePage}&pagination[pageSize]=${pageSize}&populate=*${filters}`);
-            console.log(data);
+            // console.log(data);
             setFindings(data.data);
             setAllData(data);
         } catch (error) {
@@ -54,7 +54,7 @@ const SearchProperties = () => {
         return (
             <>
                 {findings?.map((el) => (
-                    <>
+                    <Box key={el.id}>
                         {el.attributes.images.data &&
                             <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
                                 <Stack align='center' style={{ height: "100%" }}>
@@ -67,7 +67,7 @@ const SearchProperties = () => {
                                 </Stack>
                             </Grid.Col>
                         }
-                    </>
+                    </Box>
                 ))}
             </>
         )
