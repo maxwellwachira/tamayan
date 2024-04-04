@@ -54,7 +54,7 @@ const SearchProperties = () => {
         return (
             <>
                 {findings?.map((el) => (
-                    <Box key={el.id}>
+                    <>
                         {el.attributes.images.data &&
                             <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
                                 <Stack align='center' style={{ height: "100%" }}>
@@ -67,7 +67,7 @@ const SearchProperties = () => {
                                 </Stack>
                             </Grid.Col>
                         }
-                    </Box>
+                    </>
                 ))}
             </>
         )
