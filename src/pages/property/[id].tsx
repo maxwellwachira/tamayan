@@ -133,7 +133,7 @@ const DynamicProperty = () => {
                                     {(property?.attributes.propertyType.data.attributes.type == "Office" || property?.attributes.propertyType.data.attributes.type == "Warehouse") ?
                                         <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency} per {property?.attributes.size_unit.data.attributes.unit}</Text>
                                         :
-                                        <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency != "KES" ? "" : "Million"} {property?.attributes.currency.data.attributes.currency}</Text>
+                                        <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency == 'KES' ? (property?.attributes.propertyType.data.attributes.type === "Apartment" || property?.attributes.propertyType.data.attributes.type === "Villa") ? "Million" : '' : ""} {property?.attributes.currency.data.attributes.currency}</Text>
                                     }
 
                                 </Group>
@@ -248,7 +248,7 @@ const DynamicProperty = () => {
                             {property?.attributes.proximity.split("√").map((el, index) => (
                                 <>
                                     {index > 0 &&
-                                        <Group key={index * 456}>
+                                        <Group key={index}>
                                             <IconMapPin color="teal" size={18} />
                                             <Text>{el}</Text>
                                         </Group>

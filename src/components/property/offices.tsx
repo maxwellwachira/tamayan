@@ -22,8 +22,8 @@ const OfficesOnly = () => {
     const fetchOffices = async () => {
         setLoading(true);
         let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Office")}`;
-        if (location &&  Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
-        if (size && Number(size) != 0) filter = filter + `&filters[size][$between]=${(Number(size)*1000)-999}&filters[size][$between]=${Number(size)*1000}`;
+        if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
+        if (size && Number(size) != 0) filter = filter + `&filters[size][$between]=${(Number(size) * 1000) - 999}&filters[size][$between]=${Number(size) * 1000}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
         console.log(filter);
         try {
@@ -41,11 +41,15 @@ const OfficesOnly = () => {
         return (
             <>
                 {findings?.map((el) => (
-                    <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
-                       <Stack align='center'>
-                            <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${formatNumberWithCommas(el.attributes.buyingPrice)} ${el.attributes.currency.data.attributes.currency} per ${el.attributes.size_unit.data.attributes.unit}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
-                        </Stack>
-                    </Grid.Col>
+                    <>
+                        {el.attributes.images.data &&
+                            <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
+                                <Stack align='center'>
+                                    <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${formatNumberWithCommas(el.attributes.buyingPrice)} ${el.attributes.currency.data.attributes.currency} per ${el.attributes.size_unit.data.attributes.unit}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
+                                </Stack>
+                            </Grid.Col>
+                        }
+                    </>
                 ))}
             </>
         )

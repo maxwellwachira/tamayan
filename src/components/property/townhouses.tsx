@@ -21,7 +21,7 @@ const TownHousesOnly = () => {
     const fetchTownHouses = async () => {
         setLoading(true);
         let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Town House")}`;
-        if (location &&  Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
+        if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
         if (beds && Number(beds) != 0) filter = filter + `&filters[no_of_bedrooms][$eq]=${beds}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
         console.log(filter);
@@ -40,11 +40,15 @@ const TownHousesOnly = () => {
         return (
             <>
                 {findings?.map((el) => (
-                    <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
-                        <Stack align='center'>
-                            <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
-                        </Stack>
-                    </Grid.Col>
+                    <>
+                        {el.attributes.images.data &&
+                            <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
+                                <Stack align='center'>
+                                    <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
+                                </Stack>
+                            </Grid.Col>
+                        }
+                    </>
                 ))}
             </>
         )

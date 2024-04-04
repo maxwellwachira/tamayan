@@ -42,6 +42,11 @@ const ApartmentsOnly = () => {
             1000);
     }
 
+    const updatePageSize = (value: string | null) => {
+        setpageSize(value);
+        setActivePage(1);
+    }
+
     const displayResults = () => {
         return (
             <>
@@ -81,18 +86,18 @@ const ApartmentsOnly = () => {
                                     {findings.length} {findings.length > 1 ? "results" : "result"} found
                                 </Badge>
                                 <Group gap={10}>
-                                <Text fz={14}>Apartments Per page:</Text>
-                                <Select 
-                                    data={['20', '30', '40', '50']} 
-                                    radius={5} 
-                                    size="xs" 
-                                    placeholder="Select Page size"
-                                    value={pageSize}
-                                    onChange={setpageSize}
-                                    style={{
-                                        width: 70
-                                    }}
-                                />
+                                    <Text fz={14}>Apartments Per page:</Text>
+                                    <Select
+                                        data={['20', '30', '40', '50']}
+                                        radius={5}
+                                        size="xs"
+                                        placeholder="Select Page size"
+                                        value={pageSize}
+                                        onChange={(value) => updatePageSize(value)}
+                                        style={{
+                                            width: 70
+                                        }}
+                                    />
                                 </Group>
                             </Group>
                             <Grid mt={20}>
