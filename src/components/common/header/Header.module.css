@@ -63,3 +63,15 @@
     margin-right: 10px;
   }
 }
+
+.telegram {
+  position: fixed;
+  top: calc(100vh - 165px);
+  right: 0;
+  margin-right: 30px;
+  z-index: 10;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    margin-right: 10px;
+  }
+}

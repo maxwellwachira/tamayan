@@ -35,6 +35,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import whatsapp from '@/assets/whatsapp.png';
+import telegram from '@/assets/telegram.png';
 
 const mockdata = [
     {
@@ -211,6 +212,14 @@ const Header = () => {
                     </Group>
                 </ScrollArea>
             </Drawer>
+            <Anchor className={classes.telegram} href='https://t.me/+cvCH7Mc0m_dkNmI0' target='_blank'>
+                <Image
+                    src={telegram}
+                    height={45}
+                    width={45}
+                    alt="telegram icon"
+                />
+            </Anchor>
             <Anchor className={classes.whatsapp} href='https://wa.me/254736961796?text=Hello%2C%20I%20am%20interested%20in%20Tamayan%20Properties' target='_blank'>
                 <Image
                     src={whatsapp}
