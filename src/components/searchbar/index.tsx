@@ -120,7 +120,16 @@ const SearchBar = () => {
       if (reason) query = query + `&reason=${reason}`;
       // console.log(query);
       router.push(`/property/onsale/offices/${query}`);
-    }else if (router.pathname === "/property/rentals"){
+    }else if (router.pathname === "/property/onsale/showrooms") {
+      let query = `?propertyType=${encodeURIComponent("Showroom")}`;
+      if (location) query = query + `&location=${location}`;
+      if (size) query = query + `&size=${size}`;
+      if (reason) query = query + `&reason=${reason}`;
+      // console.log(query);
+      router.push(`/property/onsale/showrooms/${query}`);
+    }
+
+    else if (router.pathname === "/property/rentals"){
       let query = `?propertyType=${encodeURIComponent("Rentals")}`;
       if (location) query = query + `&location=${location}`;
       if (rent) query = query + `&rent=${rent}`;
@@ -182,7 +191,7 @@ const SearchBar = () => {
               onChange={setPropertyType}
             />
           </Stack>
-          {(router.pathname == "/property/onsale/offices" || router.pathname == "/property/onsale/warehouses") && (
+          {(router.pathname.includes("offices") || router.pathname.includes("warehouses") || router.pathname.includes("showrooms")) && (
             <Stack gap={5}>
               <Group>
                 <IconArrowsMaximize color={colors.primaryColor} />
@@ -197,7 +206,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {(router.pathname == "/property/onsale/apartments" || router.pathname == "/property/onsale/townhouses" || router.pathname == "/property/rentals" || router.pathname == "/property/airbnb" || router.pathname == "/property/onsale/villas") && (
+          {(router.pathname.includes("apartments") || router.pathname.includes("townhouses") || router.pathname.includes("airbnb") || router.pathname.includes("villas")) && (
             <Stack gap={5}>
               <Group>
                 <IconBed color={colors.primaryColor} />
@@ -240,7 +249,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {(router.pathname == "/property/rentals" )&& (
+          {(router.pathname.includes("rentals") )&& (
             <Stack gap={5}>
               <Group>
                 <IconReceiptDollar color={colors.primaryColor} />
