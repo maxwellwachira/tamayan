@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
-:root{
+:root {
   --primary-color: #020097;
   --secondary-color: #FF6600;
   --light-background: #F5F7FB;
@@ -20,4 +20,29 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+.carousel .thumb {
+  max-height: 60px !important;
+  width: 100px !important;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.carousel .thumb img {
+  width: 100% !important;
+  /* Adjust the width of the thumbnails */
+  height: auto;
+  /* Adjust the height of the thumbnails */
+  object-fit: contain !important;
+  border-radius: 5px !important;
+}
+
+.carousel .slide img {
+  max-height: 650px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }

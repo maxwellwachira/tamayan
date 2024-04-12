@@ -1,5 +1,6 @@
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import '@/styles/globals.css';
 import { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';

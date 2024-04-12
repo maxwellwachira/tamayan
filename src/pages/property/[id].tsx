@@ -171,11 +171,12 @@ const DynamicProperty = () => {
                                         </Group>
                                     </>
                                 }
-                                <Group align="center">
-                                    <IconArrowsMaximize color="teal" size={18} />
-                                    <Text fz={14}> {property?.attributes.size} {property?.attributes.size_unit.data.attributes.unit}</Text>
-                                </Group>
-
+                                {(property && property.attributes.size) &&
+                                    <Group align="center">
+                                        <IconArrowsMaximize color="teal" size={18} />
+                                        <Text fz={14}> {property?.attributes.size} {property?.attributes.size_unit.data.attributes.unit}</Text>
+                                    </Group>
+                                }
                             </Stack>
                             <Divider label={<Text fz={14} c={"dark"} fw="bold">Project Status</Text>} my={10} px={15} color={"dark"} />
                             <Stack px="xl">
