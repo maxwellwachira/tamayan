@@ -101,7 +101,7 @@ const rent = [
         icon: IconBoxPadding,
         title: 'Showrooms on Rent',
         description: 'Explore our showrooms designed to showcase luxury and innovation, curated for your inspiration.',
-        url: '/property/onsale/showrooms'
+        url: '/property/rental/showrooms'
     },
 ]
 

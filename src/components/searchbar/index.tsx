@@ -80,70 +80,75 @@ const SearchBar = () => {
 
 
   const handleSearch = () => {
-    if (router.pathname === "/") {``
+
+    const saleType = router.pathname.includes("onsale") ? "onsale" :
+      router.pathname.includes("rental") ? "rental" :
+        "";
+
+    if (router.pathname === "/") {
       if (!location || !propertyType) {
       } else {
         router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`, undefined, { shallow: true });
       }
-    } else if (router.pathname === "/property/onsale/apartments") {
+    } else if (router.pathname.includes("apartments")) {
       let query = "?propertyType=Apartment";
       if (location) query = query + `&location=${location}`;
       if (beds) query = query + `&beds=${beds}`;
       if (reason) query = query + `&reason=${reason}`;
+      router.push(`/property/${saleType}/apartments/${query}`);
       // console.log(query);
-      router.push(`/property/onsale/apartments/${query}`);
-    } else if (router.pathname === "/property/onsale/townhouses") {
+    } else if (router.pathname.includes("townhouses")) {
       let query = `?propertyType=${encodeURIComponent("Town House")}`;
       if (location) query = query + `&location=${location}`;
       if (beds) query = query + `&beds=${beds}`;
       if (reason) query = query + `&reason=${reason}`;
+      router.push(`/property/${saleType}/townhouses/${query}`);
       // console.log(query);
-      router.push(`/property/onsale/townhouses/${query}`);
-    } else if (router.pathname === "/property/onsale/villas") {
+    } else if (router.pathname.includes("villas")) {
       let query = `?propertyType=${encodeURIComponent("Villa")}`;
       if (location) query = query + `&location=${location}`;
       if (beds) query = query + `&beds=${beds}`;
       if (reason) query = query + `&reason=${reason}`;
+      router.push(`/property/${saleType}/villas/${query}`);
       // console.log(query);
-      router.push(`/property/onsale/villas/${query}`);
-    }else if (router.pathname === "/property/onsale/warehouses") {
+    } else if (router.pathname.includes("warehouses")) {
       let query = `?propertyType=${encodeURIComponent("Warehouse")}`;
       if (location) query = query + `&location=${location}`;
       if (size) query = query + `&size=${size}`;
       if (reason) query = query + `&reason=${reason}`;
+      router.push(`/property/${saleType}/warehouses/${query}`);
       // console.log(query);
-      router.push(`/property/onsale/warehouses/${query}`);
-    } else if (router.pathname === "/property/onsale/offices") {
+    } else if (router.pathname.includes("offices")) {
       let query = `?propertyType=${encodeURIComponent("Office")}`;
       if (location) query = query + `&location=${location}`;
       if (size) query = query + `&size=${size}`;
       if (reason) query = query + `&reason=${reason}`;
       // console.log(query);
-      router.push(`/property/onsale/offices/${query}`);
-    }else if (router.pathname === "/property/onsale/showrooms") {
+      router.push(`/property/${saleType}/offices/${query}`);
+    } else if (router.pathname.includes("showrooms")) {
       let query = `?propertyType=${encodeURIComponent("Showroom")}`;
       if (location) query = query + `&location=${location}`;
       if (size) query = query + `&size=${size}`;
       if (reason) query = query + `&reason=${reason}`;
+      router.push(`/property/${saleType}/showrooms/${query}`);
       // console.log(query);
-      router.push(`/property/onsale/showrooms/${query}`);
     }
 
-    else if (router.pathname === "/property/rentals"){
+    else if (router.pathname === "/property/rentals") {
       let query = `?propertyType=${encodeURIComponent("Rentals")}`;
       if (location) query = query + `&location=${location}`;
       if (rent) query = query + `&rent=${rent}`;
       if (beds) query = query + `&beds=${beds}`;
       // console.log(query);
       router.push(`/property/rentals/${query}`);
-    }else if (router.pathname === "/property/airbnb"){
+    } else if (router.pathname === "/property/airbnb") {
       let query = `?propertyType=${encodeURIComponent("Airbnb")}`;
       if (location) query = query + `&location=${location}`;
       if (dailyCharges) query = query + `&dailyCharges=${dailyCharges}`;
       if (beds) query = query + `&beds=${beds}`;
       // console.log(query);
       router.push(`/property/airbnb/${query}`);
-    }else if (router.pathname === "/search"){
+    } else if (router.pathname === "/search") {
       let query = `?`;
       if (location) query = query + `&location=${location}`;
       if (propertyType) query = query + `&propertyType=${propertyType}`;
@@ -221,7 +226,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {!(router.pathname == "/" || router.pathname == "/search"  || router.pathname == "/property/rentals" || router.pathname == "/property/airbnb") && (
+          {!(router.pathname == "/" || router.pathname == "/search" || router.pathname == "/property/rentals" || router.pathname == "/property/airbnb") && (
             <Stack gap={5}>
               <Group>
                 <IconReportAnalytics color={colors.primaryColor} />
@@ -249,7 +254,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {(router.pathname.includes("rentals") )&& (
+          {(router.pathname.includes("rentals")) && (
             <Stack gap={5}>
               <Group>
                 <IconReceiptDollar color={colors.primaryColor} />
@@ -264,7 +269,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-           {(router.pathname == "/property/airbnb" )&& (
+          {(router.pathname == "/property/airbnb") && (
             <Stack gap={5}>
               <Group>
                 <IconReceiptDollar color={colors.primaryColor} />
@@ -272,7 +277,7 @@ const SearchBar = () => {
               </Group>
               <Select
                 placeholder="Select price range"
-                data={['5000 - 10,000 KES', '11,000 - 15,000 KES', '16,000 - 20,000 KES' , '20,000 +']}
+                data={['5000 - 10,000 KES', '11,000 - 15,000 KES', '16,000 - 20,000 KES', '20,000 +']}
                 clearable
                 value={rent}
                 onChange={setRent}

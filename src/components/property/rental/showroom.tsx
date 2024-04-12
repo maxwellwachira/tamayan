@@ -61,7 +61,7 @@ const ShowroomOnly = () => {
 
     return (
         <Container mt={30} size="lg">
-            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Showroom on Rent</Text>
+            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Showrooms on Rent</Text>
             <SearchBar />
             {loading ? <Stack mt={60} align="center" justify="center">
                 <Loader color={colors.primaryColor} type="dots" />

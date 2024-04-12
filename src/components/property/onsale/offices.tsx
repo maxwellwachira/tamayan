@@ -21,7 +21,7 @@ const OfficesOnly = () => {
 
     const fetchOffices = async () => {
         setLoading(true);
-        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Office")}&filters[rental][$ne]=${true}`;
+        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Office")}&filters[$or][0][rental][$null]=true&filters[$or][1][rental][$eq]=false`;
         if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
         if (size && Number(size) != 0) filter = filter + `&filters[size][$between]=${(Number(size) * 1000) - 999}&filters[size][$between]=${Number(size) * 1000}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
