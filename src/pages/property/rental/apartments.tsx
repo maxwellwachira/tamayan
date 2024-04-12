@@ -8,8 +8,8 @@ const ApartmentsPage = () => {
     return (
         <>
             <Head>
-                <title>Tamayan Properties | Tamayan Properties - All Apartments</title>
-                <meta name="description" content="Tamayan Properties - All Apartments" />
+                <title>Tamayan Properties | Tamayan Properties - All  Rental Apartments</title>
+                <meta name="description" content="Tamayan Properties - All Rental Apartments" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />

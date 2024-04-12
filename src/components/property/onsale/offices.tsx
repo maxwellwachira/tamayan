@@ -1,27 +1,27 @@
 import { Badge, Card, Container, Grid, Group, Loader, Stack, Text } from "@mantine/core";
-import { SearchBar } from "../searchbar";
+import { SearchBar } from "../../searchbar";
+import { ArticleCard } from "../../articleCard";
 import { colors } from "@/constants/colors";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { urls } from "@/constants/urls";
 import axios from "axios";
 import { Property } from "@/utils/interfaces";
-import { ArticleCard } from "../articleCard";
 import Image from "next/image";
 import noresults from "@/assets/no-results.png";
 import { IconBuilding } from "@tabler/icons-react";
 import { formatNumberWithCommas } from "@/utils/functions";
 
 
-const WarehouseOnly = () => {
+const OfficesOnly = () => {
     const [findings, setFindings] = useState<Property[] | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { location, size, reason } = router.query;
 
-    const fetchWarehouses = async () => {
+    const fetchOffices = async () => {
         setLoading(true);
-        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Warehouse")}`;
+        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Office")}`;
         if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
         if (size && Number(size) != 0) filter = filter + `&filters[size][$between]=${(Number(size) * 1000) - 999}&filters[size][$between]=${Number(size) * 1000}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
@@ -56,12 +56,12 @@ const WarehouseOnly = () => {
     }
 
     useEffect(() => {
-        fetchWarehouses();
+        fetchOffices();
     }, [router.query])
 
     return (
         <Container mt={30} size="lg">
-            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Warehouses on Sale</Text>
+            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Offices on Sales</Text>
             <SearchBar />
             {loading ? <Stack mt={60} align="center" justify="center">
                 <Loader color={colors.primaryColor} type="dots" />
@@ -100,4 +100,4 @@ const WarehouseOnly = () => {
     )
 }
 
-export default WarehouseOnly;
+export default OfficesOnly;

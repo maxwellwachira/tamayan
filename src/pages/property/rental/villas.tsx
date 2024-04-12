@@ -1,6 +1,6 @@
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
-import ApartmentsOnly from "@/components/property/onsale/apartments";
+import VillasOnly from "@/components/property/villas";
 import Head from "next/head";
 
 
@@ -8,12 +8,12 @@ const ApartmentsPage = () => {
     return (
         <>
             <Head>
-                <title>Tamayan Properties | Tamayan Properties - All Apartments</title>
+                <title>Tamayan Properties | Tamayan Properties - All Villas</title>
                 <meta name="description" content="Tamayan Properties - All Apartments" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-            <ApartmentsOnly />
+            <VillasOnly />
             <Footer />
         </>
     )

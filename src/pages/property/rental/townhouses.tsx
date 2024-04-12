@@ -1,6 +1,6 @@
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
-import TownHousesOnly from "@/components/property/onsale/townhouses";
+import TownHousesOnly from "@/components/property/townhouses";
 import Head from "next/head";
 
 
