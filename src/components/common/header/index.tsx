@@ -33,13 +33,13 @@ import classes from './Header.module.css';
 import buttonClasses from '@/styles/Button.module.css';
 import Image from 'next/image';
 import { colors } from '@/constants/colors';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import whatsapp from '@/assets/whatsapp.png';
 import telegram from '@/assets/telegram.png';
 
-const mockdata = [
+const sales = [
     {
         icon: IconBuildingSkyscraper,
         title: 'Apartments on Sale',
@@ -78,14 +78,60 @@ const mockdata = [
     },
 ];
 
+const rent = [
+    {
+        icon: IconBuildingSkyscraper,
+        title: 'Apartments on Rent',
+        description: 'Find your dream apartment, from cozy studios to luxurious penthouses.',
+        url: '/property/rental/apartments'
+    },
+    {
+        icon: IconDesk,
+        title: 'Offices on Rent',
+        description: 'Discover productive workspaces tailored to your business needs',
+        url: '/property/rental/offices'
+    },
+    {
+        icon: IconHomeStar,
+        title: 'Houses on Rent',
+        description: 'Experience charm and comfort in our houses',
+        url: '/property/rental/townhouses'
+    },
+    {
+        icon: IconBoxPadding,
+        title: 'Showrooms on Rent',
+        description: 'Explore our showrooms designed to showcase luxury and innovation, curated for your inspiration.',
+        url: '/property/onsale/showrooms'
+    },
+]
+
 const Header = () => {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+    const [rentalsLinksOpened, { toggle: rentalLinksToggle}] = useDisclosure(false); 
     const theme = useMantineTheme();
     const [active, setActive] = useState(0);
     const router = useRouter();
 
-    const links = mockdata.map((item) => (
+    const onSale = sales.map((item) => (
+        <UnstyledButton className={classes.subLink} key={item.title} component='a' href={item.url}>
+            <Group wrap="nowrap" align="flex-start">
+                <ThemeIcon size={34} variant="default" radius="md">
+                    <item.icon style={{ width: rem(22), height: rem(22) }} color={colors.secondaryColor} />
+                </ThemeIcon>
+                <div>
+                    <Text size="sm" fw={500} c={colors.primaryColor}>
+                        {item.title}
+                    </Text>
+                    <Text size="xs" c="dimmed">
+                        {item.description}
+                    </Text>
+                </div>
+            </Group>
+        </UnstyledButton>
+    ));
+
+    const rentals = rent.map((item) => (
         <UnstyledButton className={classes.subLink} key={item.title} component='a' href={item.url}>
             <Group wrap="nowrap" align="flex-start">
                 <ThemeIcon size={34} variant="default" radius="md">
@@ -136,7 +182,7 @@ const Header = () => {
 
                                 <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
                                     <SimpleGrid cols={2} spacing={0}>
-                                        {links}
+                                        {onSale}
                                     </SimpleGrid>
                                 </HoverCard.Dropdown>
                             </HoverCard>
@@ -156,7 +202,7 @@ const Header = () => {
 
                                 <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
                                     <SimpleGrid cols={2} spacing={0}>
-                                        {links}
+                                        {rentals}
                                     </SimpleGrid>
                                 </HoverCard.Dropdown>
                             </HoverCard>
@@ -203,10 +249,19 @@ const Header = () => {
                             />
                         </Center>
                     </UnstyledButton>
-                    <Collapse in={linksOpened}>{links}</Collapse>
-                    <a href="/property/rentals" className={classes.link} data-active={router.pathname == "/property/rentals" ? true : undefined}>
-                        Rental Properties
-                    </a>
+                    <Collapse in={linksOpened} ml={25}>{onSale}</Collapse>
+                    <UnstyledButton className={classes.link} onClick={rentalLinksToggle}>
+                        <Center inline>
+                            <Box component="span" mr={5}>
+                                Rent
+                            </Box>
+                            <IconChevronDown
+                                style={{ width: rem(16), height: rem(16) }}
+                                color={theme.colors.blue[6]}
+                            />
+                        </Center>
+                    </UnstyledButton>
+                    <Collapse in={rentalsLinksOpened} ml={25}>{rentals}</Collapse>
                     <a href="/property/airbnb" className={classes.link} data-active={router.pathname == "/property/airbnb" ? true : undefined}>
                         Airbnb
                     </a>
