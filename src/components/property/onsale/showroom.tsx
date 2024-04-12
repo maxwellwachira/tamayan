@@ -21,7 +21,7 @@ const ShowroomOnly = () => {
 
     const fetchShowroom = async () => {
         setLoading(true);
-        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Showroom")}`;
+        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Showroom")}&filters[rental][$ne]=${true}`;
         if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
         if (size && Number(size) != 0) filter = filter + `&filters[size][$between]=${(Number(size) * 1000) - 999}&filters[size][$between]=${Number(size) * 1000}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;

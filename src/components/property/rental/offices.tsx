@@ -21,7 +21,7 @@ const OfficesOnly = () => {
 
     const fetchOffices = async () => {
         setLoading(true);
-        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Office")}&filters[rental][$ne]=${true}`;
+        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Office")}&filters[rental][$eq]=${true}`;
         if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
         if (size && Number(size) != 0) filter = filter + `&filters[size][$between]=${(Number(size) * 1000) - 999}&filters[size][$between]=${Number(size) * 1000}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
@@ -61,7 +61,7 @@ const OfficesOnly = () => {
 
     return (
         <Container mt={30} size="lg">
-            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Offices on Sales</Text>
+            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Offices on Rent</Text>
             <SearchBar />
             {loading ? <Stack mt={60} align="center" justify="center">
                 <Loader color={colors.primaryColor} type="dots" />

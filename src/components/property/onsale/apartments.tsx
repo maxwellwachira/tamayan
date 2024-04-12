@@ -25,7 +25,7 @@ const ApartmentsOnly = () => {
 
     const fetchApartments = async () => {
         setLoading(true);
-        let filter = '&filters[propertyType][type][$eq]=Apartment';
+        let filter = `&filters[propertyType][type][$eq]=Apartment&filters[rental][$ne]=${true}`;
         if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
         if (beds && Number(beds) != 0) filter = filter + `&filters[no_of_bedrooms][$eq]=${beds}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;

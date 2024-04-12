@@ -1,29 +1,28 @@
 import { Badge, Card, Container, Grid, Group, Loader, Stack, Text } from "@mantine/core";
 import { SearchBar } from "../../searchbar";
-import { ArticleCard } from "../../articleCard";
 import { colors } from "@/constants/colors";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { urls } from "@/constants/urls";
 import axios from "axios";
 import { Property } from "@/utils/interfaces";
+import { ArticleCard } from "../../articleCard";
 import Image from "next/image";
 import noresults from "@/assets/no-results.png";
 import { IconBuilding } from "@tabler/icons-react";
-import { formatNumberWithCommas } from "@/utils/functions";
 
 
-const OfficesOnly = () => {
+const VillasOnly = () => {
     const [findings, setFindings] = useState<Property[] | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { location, size, reason } = router.query;
+    const { location, beds, reason } = router.query;
 
-    const fetchOffices = async () => {
+    const fetchVillas = async () => {
         setLoading(true);
-        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Office")}&filters[rental][$ne]=${true}`;
+        let filter = `&filters[propertyType][type][$eq]=${encodeURIComponent("Villa")}&filters[rental][$eq]=${true}`;
         if (location && Number(location) != 0) filter = filter + `&filters[county][county][$eq]=${location}`;
-        if (size && Number(size) != 0) filter = filter + `&filters[size][$between]=${(Number(size) * 1000) - 999}&filters[size][$between]=${Number(size) * 1000}`;
+        if (beds && Number(beds) != 0) filter = filter + `&filters[no_of_bedrooms][$eq]=${beds}`;
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
         console.log(filter);
         try {
@@ -45,7 +44,7 @@ const OfficesOnly = () => {
                         {el.attributes.images.data &&
                             <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
                                 <Stack align='center'>
-                                    <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${formatNumberWithCommas(el.attributes.buyingPrice)} ${el.attributes.currency.data.attributes.currency} per ${el.attributes.size_unit.data.attributes.unit}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
+                                    <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
                                 </Stack>
                             </Grid.Col>
                         }
@@ -56,12 +55,12 @@ const OfficesOnly = () => {
     }
 
     useEffect(() => {
-        fetchOffices();
+        fetchVillas();
     }, [router.query])
 
     return (
         <Container mt={30} size="lg">
-            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Offices on Sales</Text>
+            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Villas on Rent</Text>
             <SearchBar />
             {loading ? <Stack mt={60} align="center" justify="center">
                 <Loader color={colors.primaryColor} type="dots" />
@@ -100,4 +99,4 @@ const OfficesOnly = () => {
     )
 }
 
-export default OfficesOnly;
+export default VillasOnly;
