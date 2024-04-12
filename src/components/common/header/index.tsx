@@ -26,6 +26,8 @@ import {
     IconDesk,
     IconBuildingWarehouse,
     IconHomeStar,
+    IconBuildingCottage,
+    IconBoxPadding,
 } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import buttonClasses from '@/styles/Button.module.css';
@@ -61,6 +63,18 @@ const mockdata = [
         title: 'Town houses on Sale',
         description: 'Experience charm and comfort in our townhouses',
         url: '/property/onsale/townhouses'
+    },
+    {
+        icon: IconBuildingCottage,
+        title: 'Villas on Sale',
+        description: 'Experience luxury living in our exquisite villas, where elegance meets serenity',
+        url: '/property/onsale/villas'
+    },
+    {
+        icon: IconBoxPadding,
+        title: 'Showroom on Sale',
+        description: 'Explore our showrooms designed to showcase luxury and innovation, curated for your inspiration.',
+        url: '/property/onsale/showrooms'
     },
 ];
 
@@ -121,37 +135,31 @@ const Header = () => {
                                 </HoverCard.Target>
 
                                 <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
-                                    {/* <Group justify="space-between" px="md">
-                                        <Text fw={500}>Properties on Sale</Text>
-                                        <Anchor href="#" fz="xs">
-                                            View all
-                                        </Anchor>
-                                    </Group>
-
-                                    <Divider my="sm" /> */}
-
                                     <SimpleGrid cols={2} spacing={0}>
                                         {links}
                                     </SimpleGrid>
-
-                                    {/* <div className={classes.dropdownFooter}>
-                                        <Group justify="space-between">
-                                            <div>
-                                                <Text fw={500} fz="sm">
-                                                    Get started
-                                                </Text>
-                                                <Text size="xs" c="dimmed">
-                                                    Unlock Your Dream Property Today: Where Every Property Tells a Story!
-                                                </Text>
-                                            </div>
-                                            <Button className={buttonClasses.secondaryButton}>Get started</Button>
-                                        </Group>
-                                    </div> */}
                                 </HoverCard.Dropdown>
                             </HoverCard>
-                            <a href="/property/rentals" className={classes.link} data-active={router.pathname == "/property/rentals" ? true : undefined}>
-                                Rental Properties
-                            </a>
+                            <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
+                                <HoverCard.Target>
+                                    <a href="#" className={classes.link}>
+                                        <Center inline>
+                                            <Box component="span" mr={5}>
+                                                Rent
+                                            </Box>
+                                            <IconChevronDown
+                                                style={{ width: rem(16), height: rem(16) }}
+                                            />
+                                        </Center>
+                                    </a>
+                                </HoverCard.Target>
+
+                                <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
+                                    <SimpleGrid cols={2} spacing={0}>
+                                        {links}
+                                    </SimpleGrid>
+                                </HoverCard.Dropdown>
+                            </HoverCard>
                             <a href="/property/airbnb" className={classes.link} data-active={router.pathname == "/property/airbnb" ? true : undefined}>
                                 Airbnb
                             </a>

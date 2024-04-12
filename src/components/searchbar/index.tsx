@@ -99,7 +99,14 @@ const SearchBar = () => {
       if (reason) query = query + `&reason=${reason}`;
       // console.log(query);
       router.push(`/property/onsale/townhouses/${query}`);
-    } else if (router.pathname === "/property/onsale/warehouses") {
+    } else if (router.pathname === "/property/onsale/villas") {
+      let query = `?propertyType=${encodeURIComponent("Villa")}`;
+      if (location) query = query + `&location=${location}`;
+      if (beds) query = query + `&beds=${beds}`;
+      if (reason) query = query + `&reason=${reason}`;
+      // console.log(query);
+      router.push(`/property/onsale/villas/${query}`);
+    }else if (router.pathname === "/property/onsale/warehouses") {
       let query = `?propertyType=${encodeURIComponent("Warehouse")}`;
       if (location) query = query + `&location=${location}`;
       if (size) query = query + `&size=${size}`;
@@ -190,7 +197,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {(router.pathname == "/property/onsale/apartments" || router.pathname == "/property/onsale/townhouses" || router.pathname == "/property/rentals" || router.pathname == "/property/airbnb") && (
+          {(router.pathname == "/property/onsale/apartments" || router.pathname == "/property/onsale/townhouses" || router.pathname == "/property/rentals" || router.pathname == "/property/airbnb" || router.pathname == "/property/onsale/villas") && (
             <Stack gap={5}>
               <Group>
                 <IconBed color={colors.primaryColor} />

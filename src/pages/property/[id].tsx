@@ -151,7 +151,7 @@ const DynamicProperty = () => {
                             <Divider label={<Text fz={14} c={"dark"} fw="bold">General Information</Text>} my={10} px={15} color={"dark"} />
                             <Stack px="xl">
                                 {
-                                    (property?.attributes.propertyType.data.attributes.type == "Apartment" || property?.attributes.propertyType.data.attributes.type == "Town House") &&
+                                    (property?.attributes.propertyType.data.attributes.type == "Apartment" || property?.attributes.propertyType.data.attributes.type == "Town House" || property?.attributes.propertyType.data.attributes.type == "Villa") &&
                                     <>
                                         <Group align="center">
                                             <IconBed color="teal" size={18} />
@@ -200,7 +200,7 @@ const DynamicProperty = () => {
                                     <IconMapPin color="teal" size={18} />
                                     <a href={property?.attributes.locationPin} target="__blank"> Google Maps</a>
                                 </Group>
-                                <Group align="center" wrap="nowrap">
+                                <Group wrap="nowrap" align="flex-start">
                                     <IconMapPin color="teal" size={18} />
                                     <Text fz={14}>{property?.attributes.location}</Text>
                                 </Group>
@@ -236,26 +236,40 @@ const DynamicProperty = () => {
                                     </Group>
                                 ))}
                             </Card>
-                            <Card className={classes.cardShadow} radius="lg">
-                                <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Payment Plan</Text>
-                                <Text style={{ whiteSpace: 'pre-line' }}>{property?.attributes.paymentPlan}</Text>
-                            </Card>
+                            {(property && property.attributes.paymentPlan) &&
+                                <Card className={classes.cardShadow} radius="lg">
+                                    <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Payment Plan</Text>
+                                    <Text style={{ whiteSpace: 'pre-line' }}>{property?.attributes.paymentPlan}</Text>
+                                </Card>
+                            }
                         </Stack>
                     </Grid.Col>
                     <Grid.Col span={{ base: 12, md: 6 }}>
-                        <Card className={classes.cardShadow} radius="lg">
-                            <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Proximity</Text>
-                            {property?.attributes.proximity.split("√").map((el, index) => (
-                                <>
-                                    {index > 0 &&
-                                        <Group key={index}>
-                                            <IconMapPin color="teal" size={18} />
-                                            <Text>{el}</Text>
-                                        </Group>
-                                    }
-                                </>
-                            ))}
-                        </Card>
+                        {(property && property.attributes.proximity) &&
+                            <Card className={classes.cardShadow} radius="lg">
+                                <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Proximity</Text>
+                                {property?.attributes.proximity.split("√").map((el, index) => (
+                                    <>
+                                        {index > 0 &&
+                                            <Group key={index} wrap="nowrap" align="flex-start">
+                                                <IconMapPin color="teal" size={18} />
+                                                <Text>{el}</Text>
+                                            </Group>
+                                        }
+                                    </>
+                                ))}
+                                {property?.attributes.proximity.split("•").map((el, index) => (
+                                    <>
+                                        {index > 0 &&
+                                            <Group key={index} flex={1} wrap="nowrap" align="flex-start">
+                                                <IconMapPin color="teal" size={18} />
+                                                <Text>{el}</Text>
+                                            </Group>
+                                        }
+                                    </>
+                                ))}
+                            </Card>
+                        }
                         <Card className={classes.cardShadow} radius="lg" mt={20}>
                             <Text ta="center" fz={24} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"}>Reasons for Buying</Text>
                             {property?.attributes.buyingReasons.data.map((el, index) => (
