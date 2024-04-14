@@ -105,10 +105,26 @@ const rent = [
     },
 ]
 
+const airbnbs = [
+    {
+        icon: IconHomeStar,
+        title: 'Fully Furnished Houses',
+        description: 'Experience charm and comfort in our houses',
+        url: '/property/furnished/houses'
+    },
+    {
+        icon: IconBuildingSkyscraper,
+        title: 'Fully Serviced Apartments',
+        description: 'Find your dream apartment, from cozy studios to luxurious penthouses.',
+        url: '/property/furnished/apartments'
+    },
+]
+
 const Header = () => {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-    const [rentalsLinksOpened, { toggle: rentalLinksToggle}] = useDisclosure(false); 
+    const [rentalsLinksOpened, { toggle: rentalLinksToggle }] = useDisclosure(false);
+    const [furnishedLinksOpened, { toggle: furnishedLinksToggle }] = useDisclosure(false);
     const theme = useMantineTheme();
     const [active, setActive] = useState(0);
     const router = useRouter();
@@ -148,6 +164,25 @@ const Header = () => {
             </Group>
         </UnstyledButton>
     ));
+
+    const furnished = airbnbs.map((item) => (
+        <UnstyledButton className={classes.subLink} key={item.title} component='a' href={item.url}>
+            <Group wrap="nowrap" align="flex-start">
+                <ThemeIcon size={34} variant="default" radius="md">
+                    <item.icon style={{ width: rem(22), height: rem(22) }} color={colors.secondaryColor} />
+                </ThemeIcon>
+                <div>
+                    <Text size="sm" fw={500} c={colors.primaryColor}>
+                        {item.title}
+                    </Text>
+                    <Text size="xs" c="dimmed">
+                        {item.description}
+                    </Text>
+                </div>
+            </Group>
+        </UnstyledButton>
+    ));
+
 
     return (
         <Box>
@@ -206,9 +241,26 @@ const Header = () => {
                                     </SimpleGrid>
                                 </HoverCard.Dropdown>
                             </HoverCard>
-                            <a href="/property/airbnb" className={classes.link} data-active={router.pathname == "/property/airbnb" ? true : undefined}>
-                                Airbnb
-                            </a>
+                            <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
+                                <HoverCard.Target>
+                                    <a href="#" className={classes.link}>
+                                        <Center inline>
+                                            <Box component="span" mr={5}>
+                                                Fully Furnished
+                                            </Box>
+                                            <IconChevronDown
+                                                style={{ width: rem(16), height: rem(16) }}
+                                            />
+                                        </Center>
+                                    </a>
+                                </HoverCard.Target>
+
+                                <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
+                                    <SimpleGrid cols={2} spacing={0}>
+                                        {furnished}
+                                    </SimpleGrid>
+                                </HoverCard.Dropdown>
+                            </HoverCard>
                             <a href="/faqs" className={classes.link} data-active={router.pathname == "/faqs" ? true : undefined}>
                                 FAQs
                             </a>
@@ -262,9 +314,18 @@ const Header = () => {
                         </Center>
                     </UnstyledButton>
                     <Collapse in={rentalsLinksOpened} ml={25}>{rentals}</Collapse>
-                    <a href="/property/airbnb" className={classes.link} data-active={router.pathname == "/property/airbnb" ? true : undefined}>
-                        Airbnb
-                    </a>
+                    <UnstyledButton className={classes.link} onClick={furnishedLinksToggle}>
+                        <Center inline>
+                            <Box component="span" mr={5}>
+                                Fully Furnished
+                            </Box>
+                            <IconChevronDown
+                                style={{ width: rem(16), height: rem(16) }}
+                                color={theme.colors.blue[6]}
+                            />
+                        </Center>
+                    </UnstyledButton>
+                    <Collapse in={furnishedLinksOpened} ml={25}>{furnished}</Collapse>
                     <a href="/faqs" className={classes.link} data-active={router.pathname == "/faqs" ? true : undefined}>
                         FAQs
                     </a>
