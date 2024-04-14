@@ -225,7 +225,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {!(router.pathname == "/" || router.pathname == "/search" || router.pathname == "/property/rentals" || router.pathname == "/property/furnished/houses") && (
+          {!(router.pathname == "/" || router.pathname == "/search" || router.pathname == "/property/rentals") && (
             <Stack gap={5}>
               <Group>
                 <IconReportAnalytics color={colors.primaryColor} />

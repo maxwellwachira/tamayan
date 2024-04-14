@@ -133,7 +133,13 @@ const DynamicProperty = () => {
                                     {(property?.attributes.propertyType.data.attributes.type == "Office" || property?.attributes.propertyType.data.attributes.type == "Warehouse") ?
                                         <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency} per {property?.attributes.size_unit.data.attributes.unit}</Text>
                                         :
-                                        <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency == 'KES' ? (property?.attributes.propertyType.data.attributes.type === "Apartment" || property?.attributes.propertyType.data.attributes.type === "Villa") ? "Million" : '' : ""} {property?.attributes.currency.data.attributes.currency}</Text>
+                                        <>
+                                            {
+                                                property && property.attributes.propertyType.data.attributes.type.includes("Fully") ?
+                                                    <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property.attributes.propertyType.data.attributes.type.includes("Serviced") && property.attributes.currency.data.attributes.currency === "KES" ? "Million" : ""} {property?.attributes.currency.data.attributes.currency} {property.attributes.propertyType.data.attributes.type.includes("Furnished") ? "per Month" : ""} </Text> :
+                                                    <Text fz={14}>{formatNumberWithCommas(property?.attributes.buyingPrice)} {property?.attributes.currency.data.attributes.currency == 'KES' ? (property?.attributes.propertyType.data.attributes.type === "Apartment" || property?.attributes.propertyType.data.attributes.type === "Villa") ? "Million" : '' : ""} {property?.attributes.currency.data.attributes.currency}</Text>
+                                            }
+                                        </>
                                     }
 
                                 </Group>

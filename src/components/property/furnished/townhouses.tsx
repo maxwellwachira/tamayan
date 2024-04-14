@@ -10,6 +10,7 @@ import { ArticleCard } from "../../articleCard";
 import Image from "next/image";
 import noresults from "@/assets/no-results.png";
 import { IconBuilding } from "@tabler/icons-react";
+import { formatNumberWithCommas } from "@/utils/functions";
 
 
 const TownHousesOnly = () => {
@@ -44,7 +45,7 @@ const TownHousesOnly = () => {
                         {el.attributes.images.data &&
                             <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
                                 <Stack align='center'>
-                                    <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${el.attributes.buyingPrice} Million ${el.attributes.currency.data.attributes.currency}`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
+                                    <ArticleCard id={el.id} image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName} description={el.attributes.summary} footerTitle={`${formatNumberWithCommas(el.attributes.buyingPrice)} ${el.attributes.currency.data.attributes.currency}/Month`} Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
                                 </Stack>
                             </Grid.Col>
                         }
@@ -60,7 +61,7 @@ const TownHousesOnly = () => {
 
     return (
         <Container mt={30} size="lg">
-            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Houses on Rent</Text>
+            <Text ta="center" fz={23} c={colors.secondaryColor} fw={500} ff={"'Patrick Hand', cursive"} mb={20}>Search Fully Furnished Houses</Text>
             <SearchBar />
             {loading ? <Stack mt={60} align="center" justify="center">
                 <Loader color={colors.primaryColor} type="dots" />
