@@ -25,7 +25,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-html-parser": "^2.0.2",
-    "react-responsive-carousel": "^3.2.23"
+    "react-responsive-carousel": "^3.2.23",
+    "sharp": "^0.33.3"
   },
   "devDependencies": {
     "@types/node": "^20",
