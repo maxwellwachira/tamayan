@@ -6,6 +6,7 @@ import buttonClasses from "@/styles/Button.module.css";
 import classes from "./SearchBar.module.css";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mantine/hooks";
+import { IconListCheck } from "@tabler/icons-react";
 
 const SearchBar = () => {
   const router = useRouter();
@@ -15,10 +16,12 @@ const SearchBar = () => {
   const urlBeds = router.query.beds as string;
   const urlReason = router.query.reason as string;
   const urlSize = router.query.size as string;
+  const urlListing = router.query.listingStatus as string;
 
   const [location, setLocation] = useState<string | null>(urlLocation);
   const [propertyType, setPropertyType] = useState<string | null>(urlPropertyType);
   const [beds, setBeds] = useState<string | null>(urlBeds);
+  const [listing, setListing] = useState<string | null>(urlListing);
   const [reason, setReason] = useState<string | null>(urlReason);
   const [size, setSize] = useState<string | null>(urlSize);
   const [priceRange, setPriceRange] = useState<string | null>('');
@@ -39,11 +42,14 @@ const SearchBar = () => {
 
   const propertyTypes = [
     { value: "0", label: "Any" },
-    { value: "Apartment", label: "Apartments on Sale" },
-    { value: "Office", label: "Offices on Sale" },
-    { value: "Warehouse", label: "Warehouses on Sale" },
-    { value: "Town House", label: "Town Houses on Sale" },
-    { value: "Rentals", label: "Rental" }
+    { value: "Apartment", label: "Apartments" },
+    { value: "Office", label: "Offices" },
+    { value: "Warehouse", label: "Warehouses" },
+    { value: "Fully Serviced Apartments", label: "Fully Serviced Apartments" },
+    { value: "Fully Furnished House", label: "Fully Furnished House" },
+    { value: "Town House", label: "Town Houses" },
+    { value: "Villa", label: "Villas" },
+    { value: "Showroom", label: "Showrooms" }
   ];
 
   const bedrooms = [
@@ -78,19 +84,26 @@ const SearchBar = () => {
     { value: "Investment - Value appreciation", label: "Investment - Value appreciation" },
   ]
 
+  const listingStatus = [
+    { value: "0", label: "Any" },
+    { value: "Sale", label: "For Sale" },
+    { value: "Rent", label: "For Rent" },
+  ]
+
 
   const handleSearch = () => {
-
     const saleType = router.pathname.includes("onsale") ? "onsale" :
       router.pathname.includes("rental") ? "rental" :
-      router.pathname.includes("furnished") ? "furnished" : 
-      "";
+        router.pathname.includes("furnished") ? "furnished" :
+          "";
 
-    if (router.pathname === "/") {
-      if (!location || !propertyType) {
-      } else {
-        router.push(`/search?location=${encodeURIComponent(location)}&propertyType=${encodeURIComponent(propertyType)}`, undefined, { shallow: true });
-      }
+    if (router.pathname === "/" || router.pathname === "/search") {
+      let query = `?`;
+      if (location) query = query + `&location=${location}`;
+      if (propertyType) query = query + `&propertyType=${propertyType}`;
+      if (listing) query = query + `&listingStatus=${listing}`;
+      // console.log(query);
+      router.push(`/search/${query}`);
     } else if (router.pathname.includes("apartments")) {
       let query = "?propertyType=Apartment";
       if (location) query = query + `&location=${location}`;
@@ -133,26 +146,13 @@ const SearchBar = () => {
       if (reason) query = query + `&reason=${reason}`;
       router.push(`/property/${saleType}/showrooms/${query}`);
       // console.log(query);
-    }else if (router.pathname === "/property/furnished/houses") {
+    } else if (router.pathname === "/property/furnished/houses") {
       let query = `?propertyType=${encodeURIComponent("Fully Furnished House")}`;
       if (location) query = query + `&location=${location}`;
       if (rent) query = query + `&rent=${rent}`;
       if (beds) query = query + `&beds=${beds}`;
       // console.log(query);
       router.push(`/property/furnished/houses/${query}`);
-    } else if (router.pathname === "/property/airbnb") {
-      let query = `?propertyType=${encodeURIComponent("Airbnb")}`;
-      if (location) query = query + `&location=${location}`;
-      if (dailyCharges) query = query + `&dailyCharges=${dailyCharges}`;
-      if (beds) query = query + `&beds=${beds}`;
-      // console.log(query);
-      router.push(`/property/airbnb/${query}`);
-    } else if (router.pathname === "/search") {
-      let query = `?`;
-      if (location) query = query + `&location=${location}`;
-      if (propertyType) query = query + `&propertyType=${propertyType}`;
-      // console.log(query);
-      router.push(`/search/${query}`);
     }
   }
 
@@ -169,6 +169,21 @@ const SearchBar = () => {
           spacing={{ base: 10, sm: 'xl' }}
           verticalSpacing={{ base: 'md', sm: 'xl' }}
         >
+          {(router.pathname == "/" || router.pathname == "/search") && (
+            <Stack gap={5}>
+              <Group>
+                <IconListCheck color={colors.primaryColor} />
+                <Text c={colors.primaryColor}>Listing Status</Text>
+              </Group>
+              <Select
+                placeholder="Select listing status"
+                data={listingStatus}
+                clearable
+                value={listing}
+                onChange={setListing}
+              />
+            </Stack>
+          )}
           <Stack gap={5}>
             <Group>
               <IconMapPin color={colors.primaryColor} />
@@ -240,49 +255,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {(router.pathname == "/" || router.pathname == "/search") && (
-            <Stack gap={5}>
-              <Group>
-                <IconReceiptDollar color={colors.primaryColor} />
-                <Text c={colors.primaryColor}>Price Range</Text>
-              </Group>
-              <Select
-                placeholder="Select price range"
-                data={['2 - 3 Million KES', '3 - 5 Million KES', '5 - 8 Million KES', '8 - 15 Million KES', '15 Million +']}
-                clearable
-              />
-            </Stack>
-          )}
-          {(router.pathname.includes("rentals")) && (
-            <Stack gap={5}>
-              <Group>
-                <IconReceiptDollar color={colors.primaryColor} />
-                <Text c={colors.primaryColor}>Monthly Rent</Text>
-              </Group>
-              <Select
-                placeholder="Select price range"
-                data={['50,000 - 70,000 KES', '71,000 - 90,000 KES', '91,000 - 110,000 KES', '111,000 - 150,000 KES', '150,000 +']}
-                clearable
-                value={rent}
-                onChange={setRent}
-              />
-            </Stack>
-          )}
-          {(router.pathname == "/property/airbnb") && (
-            <Stack gap={5}>
-              <Group>
-                <IconReceiptDollar color={colors.primaryColor} />
-                <Text c={colors.primaryColor}>Daily Charges</Text>
-              </Group>
-              <Select
-                placeholder="Select price range"
-                data={['5000 - 10,000 KES', '11,000 - 15,000 KES', '16,000 - 20,000 KES', '20,000 +']}
-                clearable
-                value={rent}
-                onChange={setRent}
-              />
-            </Stack>
-          )}
+
           <Button mt={smBreakPoint ? 5 : 30} className={buttonClasses.secondaryButton} leftSection={<IconSearch size={16} />} onClick={handleSearch}>Search</Button>
         </SimpleGrid>
       </Card>

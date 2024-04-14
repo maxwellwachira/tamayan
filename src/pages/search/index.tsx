@@ -19,7 +19,7 @@ import { formatNumberWithCommas } from "@/utils/functions";
 
 const SearchProperties = () => {
     const router = useRouter();
-    const { location, propertyType } = router.query;
+    const { location, propertyType, listingStatus } = router.query;
     const [findings, setFindings] = useState<Property[] | null>(null);
     const [loading, setLoading] = useState(false);
     const smBreakPoint = useMediaQuery('(max-width: 48em)');
@@ -32,6 +32,13 @@ const SearchProperties = () => {
         let filters = "&";
         if (location && Number(location) != 0) filters = filters + `filters[county][county][$eq]=${location}&`;
         if (propertyType && Number(propertyType) != 0) filters = filters + `filters[propertyType][type][$eq]=${propertyType}`;
+        if (listingStatus && Number(listingStatus) != 0){
+            if (listingStatus === "Sale"){
+                filters = filters + `filters[$or][0][rental][$null]=true&filters[$or][1][rental][$eq]=false`;
+            }else if (listingStatus ===  "Rent"){
+                filters = filters + `filters[rental][$eq]=${true}`;
+            }
+        }
         try {
             const { data } = await axios.get(`${urls.strapiUrl}/properties?pagination[page]=${activePage}&pagination[pageSize]=${pageSize}&populate=*${filters}`);
             // console.log(data);
@@ -62,7 +69,13 @@ const SearchProperties = () => {
                                         id={el.id}
                                         image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName}
                                         description={el.attributes.summary}
-                                        footerTitle={`${formatNumberWithCommas(el.attributes.buyingPrice)} ${el.attributes.currency.data.attributes.currency == 'KES' ? (el.attributes.propertyType.data.attributes.type === "Apartment" || el.attributes.propertyType.data.attributes.type === "Villa") ? "Million" : '' : ""} ${el.attributes.currency.data.attributes.currency} ${(el.attributes.propertyType.data.attributes.type === "Office" || el.attributes.propertyType.data.attributes.type === "Warehouse") ? `per ${el.attributes.size_unit.data.attributes.unit}` : ""}`}
+                                        footerTitle={`
+                                            ${formatNumberWithCommas(el.attributes.buyingPrice)} 
+                                            ${el.attributes.currency.data.attributes.currency == 'KES' ?
+                                                    (el.attributes.propertyType.data.attributes.type === "Apartment" || el.attributes.propertyType.data.attributes.type === "Villa" || el.attributes.propertyType.data.attributes.type.includes("Serviced")) ? "Million" : '' : ""} 
+                                            ${el.attributes.currency.data.attributes.currency}${el.attributes.propertyType.data.attributes.type.includes("Furnished") ? "/Month" : ""}
+                                            ${(el.attributes.propertyType.data.attributes.type === "Office" || el.attributes.propertyType.data.attributes.type === "Warehouse" || el.attributes.propertyType.data.attributes.type === "Showroom") ? `per ${el.attributes.size_unit.data.attributes.unit}` : ""}
+                                        `}
                                         Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
                                 </Stack>
                             </Grid.Col>
@@ -75,7 +88,7 @@ const SearchProperties = () => {
 
     useEffect(() => {
         searchProperty();
-    }, [router.query.location, router.query.propertyType, activePage, pageSize]);
+    }, [router.query, activePage, pageSize]);
     return (
         <>
             <Head>
