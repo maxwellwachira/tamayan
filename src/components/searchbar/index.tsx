@@ -83,7 +83,8 @@ const SearchBar = () => {
 
     const saleType = router.pathname.includes("onsale") ? "onsale" :
       router.pathname.includes("rental") ? "rental" :
-        "";
+      router.pathname.includes("furnished") ? "furnished" : 
+      "";
 
     if (router.pathname === "/") {
       if (!location || !propertyType) {
@@ -132,15 +133,13 @@ const SearchBar = () => {
       if (reason) query = query + `&reason=${reason}`;
       router.push(`/property/${saleType}/showrooms/${query}`);
       // console.log(query);
-    }
-
-    else if (router.pathname === "/property/rentals") {
-      let query = `?propertyType=${encodeURIComponent("Rentals")}`;
+    }else if (router.pathname === "/property/furnished/houses") {
+      let query = `?propertyType=${encodeURIComponent("Fully Furnished House")}`;
       if (location) query = query + `&location=${location}`;
       if (rent) query = query + `&rent=${rent}`;
       if (beds) query = query + `&beds=${beds}`;
       // console.log(query);
-      router.push(`/property/rentals/${query}`);
+      router.push(`/property/furnished/houses/${query}`);
     } else if (router.pathname === "/property/airbnb") {
       let query = `?propertyType=${encodeURIComponent("Airbnb")}`;
       if (location) query = query + `&location=${location}`;
@@ -211,7 +210,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {(router.pathname.includes("apartments") || router.pathname.includes("townhouses") || router.pathname.includes("airbnb") || router.pathname.includes("villas")) && (
+          {(router.pathname.includes("apartments") || router.pathname.includes("townhouses") || router.pathname.includes("furnished/houses") || router.pathname.includes("villas")) && (
             <Stack gap={5}>
               <Group>
                 <IconBed color={colors.primaryColor} />
@@ -226,7 +225,7 @@ const SearchBar = () => {
               />
             </Stack>
           )}
-          {!(router.pathname == "/" || router.pathname == "/search" || router.pathname == "/property/rentals" || router.pathname == "/property/airbnb") && (
+          {!(router.pathname == "/" || router.pathname == "/search" || router.pathname == "/property/rentals" || router.pathname == "/property/furnished/houses") && (
             <Stack gap={5}>
               <Group>
                 <IconReportAnalytics color={colors.primaryColor} />
