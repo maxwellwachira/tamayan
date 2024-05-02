@@ -31,7 +31,7 @@ const SearchProperties = () => {
         setLoading(true);
         let filters = "&";
         if (location && Number(location) != 0) filters = filters + `filters[county][county][$eq]=${location}&`;
-        if (propertyType && Number(propertyType) != 0) filters = filters + `filters[propertyType][type][$eq]=${propertyType}`;
+        if (propertyType && Number(propertyType) != 0) filters = filters + `filters[propertyType][type][$eq]=${propertyType}&`;
         if (listingStatus && Number(listingStatus) != 0){
             if (listingStatus === "Sale"){
                 filters = filters + `filters[$or][0][rental][$null]=true&filters[$or][1][rental][$eq]=false`;
