@@ -28,9 +28,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         <RefreshPageProvider>
           {!loading ?
             (<PageLoader />) :
-            <>
               <Component {...pageProps} />
-            </>
+           
           }
         </RefreshPageProvider>
       </MantineProvider>
