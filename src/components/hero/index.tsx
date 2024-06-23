@@ -24,9 +24,9 @@ const FeaturedProperties = () => {
         }
     }
 
-    const featuredProperties = properties?.map((el) => (
-        <>
-            {el.attributes.images.data &&
+    const featuredProperties = properties?.map((el) => {
+        if (el.attributes.images.data) {
+            return (
                 <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
                     <Stack align='center' style={{ height: "100%" }}>
                         <ArticleCard
@@ -36,16 +36,17 @@ const FeaturedProperties = () => {
                             footerTitle={`
                                 ${formatNumberWithCommas(el.attributes.buyingPrice)} 
                                 ${el.attributes.currency.data.attributes.currency == 'KES' ?
-                                        (el.attributes.propertyType.data.attributes.type === "Apartment" || el.attributes.propertyType.data.attributes.type === "Villa" || el.attributes.propertyType.data.attributes.type.includes("Serviced")) ? "Million" : '' : ""} 
+                                    (el.attributes.propertyType.data.attributes.type === "Apartment" || el.attributes.propertyType.data.attributes.type === "Villa" || el.attributes.propertyType.data.attributes.type.includes("Serviced")) ? "Million" : '' : ""} 
                                 ${el.attributes.currency.data.attributes.currency}${el.attributes.propertyType.data.attributes.type.includes("Furnished") ? "/Month" : ""}
                                 ${(el.attributes.propertyType.data.attributes.type === "Office" || el.attributes.propertyType.data.attributes.type === "Warehouse" || el.attributes.propertyType.data.attributes.type === "Showroom") ? `per ${el.attributes.size_unit.data.attributes.unit}` : ""}
                             `}
                             Icon={IconBuilding} propertyType={el.attributes.propertyType.data.attributes.type} />
                     </Stack>
                 </Grid.Col>
-            }
-        </>
-    ))
+            )
+        }
+    }
+    )
 
     useEffect(() => {
         fetchProperties();
