@@ -5,10 +5,10 @@ import '@/styles/globals.css';
 import { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
-import { GoogleAnalytics } from '@next/third-parties/google';
+//import { GoogleAnalytics } from '@next/third-parties/google';
 import PageLoader from '@/components/common/pageLoader/pageLoader';
 import { RefreshPageProvider } from '@/contexts/refreshContext';
-//import GoogleAnalytics from '@/components/googleAnalytics';
+import GoogleAnalytics from '@/components/googleAnalytics';
 
 
 const theme = createTheme({
@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           {!loading ?
             (<PageLoader />) :
             <>
-            <GoogleAnalytics gaId='G-RJE5HGCP8X'/>
+            <GoogleAnalytics />
             <Component {...pageProps} />
             </>
 
