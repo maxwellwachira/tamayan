@@ -31,7 +31,7 @@ const ApartmentsOnly = () => {
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
         console.log(filter);
         try {
-            const { data } = await axios.get(`${urls.strapiUrl}/properties?pagination[page]=${activePage}&pagination[pageSize]=${pageSize}&populate=*${filter}`);
+            const { data } = await axios.get(`${urls.strapiUrl}/properties?sort=createdAt:desc&pagination[page]=${activePage}&pagination[pageSize]=${pageSize}&populate=*${filter}`);
             console.log(data);
             setFindings(data.data);
             setAllData(data);

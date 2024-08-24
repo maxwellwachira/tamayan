@@ -16,7 +16,7 @@ const FeaturedProperties = () => {
 
     const fetchProperties = async () => {
         try {
-            const { data } = await axios.get(`${urls.strapiUrl}/properties?populate=*&filters[featured][$eq]=${true}&pagination[page]=${activePage}&pagination[pageSize]=${pageSize}`);
+            const { data } = await axios.get(`${urls.strapiUrl}/properties?sort=createdAt:desc&populate=*&filters[featured][$eq]=${true}&pagination[page]=${activePage}&pagination[pageSize]=${pageSize}`);
             // console.log(data.data)
             setProperties(data.data);
         } catch (error) {

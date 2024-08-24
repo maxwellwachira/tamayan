@@ -26,7 +26,7 @@ const VillasOnly = () => {
         if (reason && Number(reason) != 0) filter = filter + `&filters[buyingReasons][reason][$in][0]=${reason}`;
         console.log(filter);
         try {
-            const { data } = await axios.get(`${urls.strapiUrl}/properties?populate=*${filter}`);
+            const { data } = await axios.get(`${urls.strapiUrl}/properties?sort=createdAt:desc&populate=*${filter}`);
             console.log(data);
             setFindings(data.data);
         } catch (error) {
