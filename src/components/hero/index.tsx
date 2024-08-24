@@ -24,13 +24,14 @@ const FeaturedProperties = () => {
         }
     }
 
-    const featuredProperties = properties?.map((el) => {
+    const featuredProperties = properties?.map((el, index) => {
         if (el.attributes.images.data) {
             return (
                 <Grid.Col key={el.id} span={{ base: 12, md: 6, lg: 3 }} >
                     <Stack align='center' style={{ height: "100%" }}>
                         <ArticleCard
                             id={el.id}
+                            index={index}
                             image={`${urls.strapiBaseUrl}${el.attributes.images.data[0].attributes.url}`} title={el.attributes.propertyName}
                             description={el.attributes.summary}
                             footerTitle={`

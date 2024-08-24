@@ -21,9 +21,10 @@ interface ArticleCardProps {
   description: string;
   footerTitle: string;
   Icon: (props: TablerIconsProps) => JSX.Element;
+  index?: number;
 }
 
-export function ArticleCard({ id, propertyType, image, title, description, footerTitle, Icon }: ArticleCardProps) {
+export function ArticleCard({ id, propertyType, image, title, description, footerTitle, Icon, index }: ArticleCardProps) {
   const linkProps = { href: `/property/${id}`, rel: 'noopener noreferrer' };
   const theme = useMantineTheme();
 
@@ -40,6 +41,11 @@ export function ArticleCard({ id, propertyType, image, title, description, foote
         <Badge className={classes.rating} variant="gradient" gradient={{ from: 'blue', to: 'teal' }}>
           {propertyType}
         </Badge>
+      }
+      {(typeof index == "number" && index === 0) &&
+        <div className={classes.newAddition}>
+          New Addition
+        </div>
       }
       <Box component='div'>
         <Text className={classes.title} fw={500} component="a" {...linkProps}>

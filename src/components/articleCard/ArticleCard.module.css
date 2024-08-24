@@ -1,35 +1,49 @@
 .card {
-    position: relative;
-    background-color: var(--mantine-color-body);
-    max-width: 300px;
+  position: relative;
+  background-color: var(--mantine-color-body);
+  max-width: 300px;
 
-    /* @mixin hover {
+  /* @mixin hover {
       background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
     } */
+}
+
+.rating {
+  position: absolute;
+  top: var(--mantine-spacing-xs);
+  right: rem(12px);
+  pointer-events: none;
+}
+
+.title {
+  display: block;
+  margin-top: var(--mantine-spacing-md);
+  margin-bottom: rem(5px);
+  color: var(--primary-color);
+}
+
+.action {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
+
+  @mixin hover {
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
   }
-  
-  .rating {
-    position: absolute;
-    top: var(--mantine-spacing-xs);
-    right: rem(12px);
-    pointer-events: none;
-  }
-  
-  .title {
-    display: block;
-    margin-top: var(--mantine-spacing-md);
-    margin-bottom: rem(5px);
-    color: var(--primary-color);
-  }
-  
-  .action {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
-  
-    @mixin hover {
-      background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
-    }
-  }
-  
-  .footer {
-    margin-top: var(--mantine-spacing-md);
-  }
+}
+
+.footer {
+  margin-top: var(--mantine-spacing-md);
+}
+
+.newAddition {
+  position: absolute;
+  top: 15px; /* Adjust as needed */
+  left: -30px; /* Adjust as needed */
+  background-color: yellow;
+  padding: 5px 30px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #000;
+  transform: rotate(-45deg);
+  display: flex;
+  justify-content: center;
+}
